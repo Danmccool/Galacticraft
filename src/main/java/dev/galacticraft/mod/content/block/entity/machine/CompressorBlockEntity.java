@@ -23,6 +23,7 @@
 package dev.galacticraft.mod.content.block.entity.machine;
 
 import dev.galacticraft.machinelib.api.block.entity.BasicRecipeMachineBlockEntity;
+import dev.galacticraft.machinelib.api.compat.vanilla.CraftingRecipeTestContainer;
 import dev.galacticraft.machinelib.api.machine.MachineStatus;
 import dev.galacticraft.machinelib.api.storage.slot.ItemResourceSlot;
 import dev.galacticraft.mod.Constant;
@@ -39,18 +40,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
-public class CompressorBlockEntity extends BasicRecipeMachineBlockEntity<Container, CompressingRecipe> {
+public class CompressorBlockEntity extends BasicRecipeMachineBlockEntity<CraftingContainer, CompressingRecipe> {
     public static final int FUEL_SLOT = 0;
     public static final int INPUT_SLOTS = 1;
     public static final int INPUT_LENGTH = 9;
@@ -67,7 +66,7 @@ public class CompressorBlockEntity extends BasicRecipeMachineBlockEntity<Contain
     }
 
     @Override
-    protected @NotNull MachineStatus workingStatus(CompressingRecipe recipe) {
+    protected @NotNull MachineStatus workingStatus(RecipeHolder<CompressingRecipe> recipe) {
         return GCMachineStatuses.COMPRESSING;
     }
 
@@ -116,7 +115,7 @@ public class CompressorBlockEntity extends BasicRecipeMachineBlockEntity<Contain
 
     @Override
     public @NotNull MachineStatus tick(@NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull ProfilerFiller profiler) {
-        CompressingRecipe recipe = this.getActiveRecipe();
+        RecipeHolder<CompressingRecipe> recipe = this.getActiveRecipe();
         if (recipe != null && this.getState().isActive()) {
             int maxProgress = this.getProcessingTime(recipe);
             if (this.getProgress() % (maxProgress / 8) == 0 && this.getProgress() > maxProgress / 2) {
@@ -127,8 +126,8 @@ public class CompressorBlockEntity extends BasicRecipeMachineBlockEntity<Contain
     }
 
     @Override
-    public int getProcessingTime(@NotNull CompressingRecipe recipe) {
-        return recipe.getTime();
+    public int getProcessingTime(@NotNull RecipeHolder<CompressingRecipe> recipe) {
+        return recipe.value().getTime();
     }
 
     public int getFuelTime() {
@@ -158,5 +157,10 @@ public class CompressorBlockEntity extends BasicRecipeMachineBlockEntity<Contain
     public AbstractContainerMenu createMenu(int syncId, Inventory inv, Player player) {
         if (this.getSecurity().hasAccess(player)) return new CompressorMenu(syncId, (ServerPlayer) player, this);
         return null;
+    }
+
+    @Override
+    protected CraftingContainer createCraftingInv() {
+        return CraftingRecipeTestContainer.create(3, 3, this.itemStorage(), this.inputSlots, this.inputSlotsLen);
     }
 }

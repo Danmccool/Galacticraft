@@ -22,11 +22,13 @@
 
 package dev.galacticraft.mod.data.tag;
 
+import dev.galacticraft.mod.content.GCEntityTypes;
 import dev.galacticraft.mod.tag.GCTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
 
 import java.util.concurrent.CompletableFuture;
@@ -39,7 +41,7 @@ public class GCEntityTypeTagProvider extends IntrinsicHolderTagsProvider<EntityT
 
     @Override
     protected void addTags(HolderLookup.Provider arg) {
-        tag(GCTags.HAS_FOOTPRINTS)
-                .add(EntityType.PLAYER);
+        this.tag(GCTags.HAS_FOOTPRINTS).add(EntityType.PLAYER);
+        this.tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER).add(GCEntityTypes.SLIMELING);
     }
 }

@@ -26,14 +26,11 @@ import dev.galacticraft.api.universe.celestialbody.CelestialBody;
 import dev.galacticraft.api.universe.celestialbody.landable.Landable;
 import dev.galacticraft.api.universe.celestialbody.landable.teleporter.CelestialTeleporter;
 import dev.galacticraft.impl.rocket.RocketDataImpl;
-import dev.galacticraft.impl.universe.celestialbody.config.PlanetConfig;
-import dev.galacticraft.mod.accessor.CryogenicAccessor;
-import dev.galacticraft.mod.client.network.FootprintRemovedPacket;
-import dev.galacticraft.mod.content.GCEntityTypes;
 import dev.galacticraft.mod.content.block.special.CryogenicChamberBlock;
-import dev.galacticraft.mod.content.entity.ParachestEntity;
 import dev.galacticraft.mod.content.item.GCItems;
 import dev.galacticraft.mod.misc.footprint.FootprintManager;
+import dev.galacticraft.mod.network.packets.FootprintRemovedPacket;
+import dev.galacticraft.mod.util.Translations;
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -41,7 +38,6 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -49,9 +45,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
@@ -70,19 +64,16 @@ public class GCEventHandlers {
     }
 
     public static InteractionResult allowCryogenicSleep(LivingEntity entity, BlockPos sleepingPos, BlockState state, boolean vanillaResult) {
-        if (entity instanceof CryogenicAccessor player) {
-            if (player.galacticraft$isInCryoSleep()) {
-                return InteractionResult.SUCCESS;
-            }
-        }
-        return InteractionResult.PASS;
+        return entity.isInCryoSleep()
+                ? InteractionResult.SUCCESS
+                : InteractionResult.PASS;
     }
 
     public static Direction changeSleepPosition(LivingEntity entity, BlockPos sleepingPos, @Nullable Direction sleepingDirection) {
-        if (entity instanceof CryogenicAccessor player && player.galacticraft$isInCryoSleep()) {
+        if (entity.isInCryoSleep()) {
             BlockState state = entity.level().getBlockState(sleepingPos);
-            if (state.getBlock() instanceof CryogenicChamberBlock)
-                return state.getValue(CryogenicChamberBlock.FACING);
+
+            if (state.getBlock() instanceof CryogenicChamberBlock) return state.getValue(CryogenicChamberBlock.FACING);
         }
 
         return sleepingDirection;
@@ -92,7 +83,7 @@ public class GCEventHandlers {
         Level level = player.level();
         CelestialBody body = CelestialBody.getByDimension(level).orElse(null);
         if (body != null && level.getBlockState(sleepingPos).getBlock() instanceof BedBlock && !body.atmosphere().breathable()) {
-            player.sendSystemMessage(Component.translatable("chat.galacticraft.bed_fail"));
+            player.sendSystemMessage(Component.translatable(Translations.Chat.BED_FAIL));
             return Player.BedSleepingProblem.NOT_POSSIBLE_HERE;
         }
 
@@ -100,20 +91,14 @@ public class GCEventHandlers {
     }
 
     public static InteractionResult canCryoSleep(Player player, BlockPos sleepingPos, boolean vanillaResult) {
-        if (player.galacticraft$isInCryoSleep())
-            return InteractionResult.SUCCESS;
-        return vanillaResult ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        return player.isInCryoSleep() || vanillaResult
+                ? InteractionResult.SUCCESS
+                : InteractionResult.PASS;
     }
 
     public static void onWakeFromCryoSleep(LivingEntity entity, BlockPos sleepingPos) {
-        Level level = entity.level();
-        if (!level.isClientSide && level instanceof ServerLevel serverLevel && entity instanceof CryogenicAccessor player) {
-            entity.heal(5.0F);
-            player.galacticraft$setCryogenicChamberCooldown(6000);
-
-//            if (serverLevel.areAllPlayersAsleep() && ws.getGameRules().getBoolean("doDaylightCycle")) {
-//                WorldUtil.setNextMorning(ws);
-//            }
+        if (!entity.level().isClientSide() && entity.isInCryoSleep()) {
+            entity.endCyroSleep();
         }
     }
 
@@ -128,17 +113,6 @@ public class GCEventHandlers {
     public static void onPlayerChangePlanets(MinecraftServer server, ServerPlayer player, CelestialBody<?, ?> body, CelestialBody<?, ?> fromBody) {
         if (body.type() instanceof Landable landable && player.galacticraft$isCelestialScreenActive() && (player.galacticraft$getCelestialScreenState() == null || player.galacticraft$getCelestialScreenState().canTravel(server.registryAccess(), fromBody, body))) {
             player.galacticraft$closeCelestialScreen();
-            if (body.config() instanceof PlanetConfig planetConfig) {
-                var chestSpawn = planetConfig.celestialHandler().getParaChestSpawnLocation(player.serverLevel(), player, player.getRandom());
-                if (chestSpawn != null) {
-                    ParachestEntity chest = new ParachestEntity(GCEntityTypes.PARACHEST, player.serverLevel(), NonNullList.of(new ItemStack(Items.DIAMOND)), 81000);
-
-                    chest.setPos(chestSpawn);
-                    chest.color = DyeColor.RED;//player.getGearInv().getParachuteInSlot().isEmpty() ? EnumDyeColor.WHITE : ItemParaChute.getDyeEnumFromParachuteDamage(stats.getParachuteInSlot().getItemDamage());
-
-                    player.serverLevel().addFreshEntity(chest);
-                }
-            }
             ((CelestialTeleporter) landable.teleporter(body.config()).value()).onEnterAtmosphere(server.getLevel(landable.world(body.config())), player, body, fromBody);
         } else {
             player.connection.disconnect(Component.literal("Invalid planet teleport packet received."));

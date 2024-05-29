@@ -22,62 +22,31 @@
 
 package dev.galacticraft.mod.api.wire;
 
-import dev.galacticraft.mod.api.wire.impl.WireNetworkImpl;
-import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import team.reborn.energy.api.EnergyStorage;
-
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * The basic 'Wire Network' spec
  */
 public interface WireNetwork {
-    static WireNetwork create(ServerLevel world, long maxTransferRate) {
-        return new WireNetworkImpl(world, maxTransferRate);
-    }
-
-    /**
-     * Adds a wire to the network
-     * @param pos The position of the wire being added
-     * @param wire The data container of the wire being connected (can be null)
-     * @return
-     */
-    boolean addWire(@NotNull BlockPos pos, @Nullable Wire wire);
-
-    /**
-     * Removes a wire from the network
-     * @param removedPos The position of the wire being removed
-     */
-    void removeWire(Wire wire, @NotNull BlockPos removedPos);
-
     /**
      * Updates the wire's connection to the updated block
+     *
      * @param adjacentToUpdated The wire that is adjacent to the updated pos
-     * @param updatedPos The position of the block that was updated
-     * @return
+     * @param updatedPos        The position of the block that was updated
+     * @param direction         The direction of the updated block
      */
-    boolean updateConnection(@NotNull BlockPos adjacentToUpdated, @NotNull BlockPos updatedPos);
+    void updateConnection(@NotNull BlockPos adjacentToUpdated, @NotNull BlockPos updatedPos, @NotNull Direction direction);
 
     /**
      * Inserts energy into the network
-     * @param fromWire The wire that received the energy
      * @param amount The amount of energy to insert
-     * @param direction
      * @param transaction Whether to perform the action or not
      * @return the amount of energy that failed to insert
      */
-    long insert(@NotNull BlockPos fromWire, long amount, Direction direction, @NotNull TransactionContext transaction);
-
-    long insertInternal(EnergyStorage source, long amount, double ratio, long available, TransactionContext transaction);
-
-    void getNonFullInsertables(Object2LongMap<WireNetwork> energyRequirement, BlockPos source, long amount, @NotNull TransactionContext transaction);
+    long insert(long amount, @NotNull TransactionContext transaction);
 
     /**
      * Returns the maximum amount of energy allowed to pass through this network per tick
@@ -85,13 +54,9 @@ public interface WireNetwork {
      */
     long getMaxTransferRate();
 
-    Collection<BlockPos> getAllWires();
-
-    Map<BlockPos, EnergyStorage> getStorages();
-
     boolean markedForRemoval();
 
     void markForRemoval();
 
-    boolean isCompatibleWith(Wire wire);
+    boolean isCompatibleWith(@NotNull Wire wire);
 }

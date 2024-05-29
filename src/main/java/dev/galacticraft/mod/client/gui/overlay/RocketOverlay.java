@@ -26,10 +26,11 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import dev.galacticraft.mod.Constant;
-import dev.galacticraft.mod.content.entity.RocketEntity;
+import dev.galacticraft.mod.content.entity.orbital.RocketEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -39,7 +40,7 @@ import net.minecraft.world.entity.player.Player;
  * Displays the rocket's progress to the left of the screen
  */
 public class RocketOverlay {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Constant.MOD_ID, "textures/gui/overworld_rocket_gui.png");
+    private static final ResourceLocation TEXTURE = Constant.id("textures/gui/overworld_rocket_gui.png");
     private static ResourceLocation playerHead;
 
     /**
@@ -60,7 +61,7 @@ public class RocketOverlay {
     public static void onHudRender(GuiGraphics graphics, float tickDelta) {
         Minecraft mc = Minecraft.getInstance();
         if (playerHead == null) {
-            playerHead = mc.getSkinManager().getInsecureSkinLocation(mc.player.getGameProfile());
+            playerHead = mc.getSkinManager().getInsecureSkin(mc.player.getGameProfile()).texture();
         }
         if (Minecraft.getInstance().player.getVehicle() instanceof RocketEntity rocketEntity) {
             final int height = mc.getWindow().getGuiScaledHeight();
@@ -117,7 +118,7 @@ public class RocketOverlay {
 
             try {
                 MultiBufferSource.BufferSource source = Minecraft.getInstance().renderBuffers().bufferSource();
-                spaceshipRender.render(rocketEntity, rocketEntity.getYRot(), tickDelta, graphics.pose(), source, 15728880);
+                spaceshipRender.render(rocketEntity, rocketEntity.getYRot(), tickDelta, graphics.pose(), source, LightTexture.FULL_BRIGHT);
                 source.endBatch();
             } catch (Exception e) {
                 e.printStackTrace();

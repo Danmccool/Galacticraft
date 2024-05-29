@@ -22,23 +22,30 @@
 
 package dev.galacticraft.mod.mixin.client;
 
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.sugar.Local;
+import dev.galacticraft.api.entity.IgnoreShift;
+import net.minecraft.client.GameNarrator;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(ClientPacketListener.class)
 public class ClientPacketListenerMixin {
-    @Inject(method = "handleAnimate", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;stopSleepInBed(ZZ)V"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    private void gc$handleCryoStop(ClientboundAnimatePacket clientboundAnimatePacket, CallbackInfo ci, Entity entity, Player player) {
-        if (player.galacticraft$isInCryoSleep()) {
-            player.galacticraft$stopCryogenicSleep(false, false);
-            ci.cancel();
-        }
+    @WrapWithCondition(method = "handleSetEntityPassengersPacket", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;setOverlayMessage(Lnet/minecraft/network/chat/Component;Z)V"))
+    private boolean shouldShowOverylay(Gui instance, Component message, boolean tinted, @Local(index = 2) Entity vehicle) {
+        if (vehicle instanceof IgnoreShift ignoreShift)
+            return !ignoreShift.shouldIgnoreShiftExit();
+        return true;
+    }
+
+    @WrapWithCondition(method = "handleSetEntityPassengersPacket", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/GameNarrator;sayNow(Lnet/minecraft/network/chat/Component;)V"))
+    private boolean shouldSayNow(GameNarrator instance, Component message, @Local(index = 2) Entity vehicle) {
+        if (vehicle instanceof IgnoreShift ignoreShift)
+            return !ignoreShift.shouldIgnoreShiftExit();
+        return true;
     }
 }

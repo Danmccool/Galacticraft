@@ -46,9 +46,6 @@ import team.reborn.energy.api.EnergyStorage;
 
 import java.util.ArrayList;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class HeavyAluminumWireBlock extends WireBlock {
     // If we start at 8,8,8 and subtract/add to/from 8, we do operations starting from the center.
     private static final int OFFSET = 2;
@@ -111,13 +108,13 @@ public class HeavyAluminumWireBlock extends WireBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos neighborPos, boolean notify) {
-        super.neighborChanged(state, world, pos, block, neighborPos, notify);
-        BlockState neighbor = world.getBlockState(neighborPos);
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos neighborPos, boolean notify) {
+        super.neighborChanged(state, level, pos, block, neighborPos, notify);
+        BlockState neighbor = level.getBlockState(neighborPos);
         Direction dir = DirectionUtil.fromNormal(neighborPos.getX() - pos.getX(), neighborPos.getY() - pos.getY(), neighborPos.getZ() - pos.getZ());
         assert dir != null;
-        world.setBlockAndUpdate(pos, state.setValue(ConnectingBlockUtil.getBooleanProperty(dir), !neighbor.isAir() && block instanceof WireBlock
-                || EnergyStorage.SIDED.find(world, neighborPos, dir.getOpposite()) != null
+        level.setBlockAndUpdate(pos, state.setValue(ConnectingBlockUtil.getBooleanProperty(dir), !neighbor.isAir() && block instanceof WireBlock
+                || EnergyStorage.SIDED.find(level, neighborPos, dir.getOpposite()) != null
         ));
     }
 

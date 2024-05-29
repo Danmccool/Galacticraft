@@ -24,6 +24,7 @@ package dev.galacticraft.mod.content.item;
 
 import dev.galacticraft.mod.Constant;
 import dev.galacticraft.mod.util.DrawableUtil;
+import dev.galacticraft.mod.util.Translations;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -37,9 +38,6 @@ import team.reborn.energy.api.base.SimpleEnergyItem;
 
 import java.util.List;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class BatteryItem extends Item implements SimpleEnergyItem {
     private final long capacity;
     private final long transfer;
@@ -54,7 +52,7 @@ public class BatteryItem extends Item implements SimpleEnergyItem {
 
     @Override
     public void appendHoverText(ItemStack stack, Level world, List<Component> lines, TooltipFlag context) {
-        lines.add(Component.translatable("tooltip.galacticraft.energy_remaining", DrawableUtil.getEnergyDisplay(getStoredEnergy(stack)).setStyle(Constant.Text.Color.getStorageLevelStyle(1.0 - ((double)getStoredEnergy(stack)) / ((double)this.getEnergyCapacity(stack))))));
+        lines.add(Component.translatable(Translations.Tooltip.ENERGY_REMAINING, DrawableUtil.getEnergyDisplay(getStoredEnergy(stack)).setStyle(Constant.Text.Color.getStorageLevelStyle(1.0 - ((double)getStoredEnergy(stack)) / ((double)this.getEnergyCapacity(stack))))));
         super.appendHoverText(stack, world, lines, context);
     }
 

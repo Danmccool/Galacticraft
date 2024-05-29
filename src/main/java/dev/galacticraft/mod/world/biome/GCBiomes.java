@@ -27,7 +27,6 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
@@ -37,9 +36,6 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public final class GCBiomes {
     public static final class Moon {
         public static final ResourceKey<Biome> COMET_TUNDRA = key("comet_tundra");
@@ -49,7 +45,13 @@ public final class GCBiomes {
         public static final ResourceKey<Biome> OLIVINE_SPIKES = key("olivine_spikes");
     }
 
-    public static final ResourceKey<Biome> SPACE = ResourceKey.create(Registries.BIOME, new ResourceLocation(Constant.MOD_ID, "space"));
+    public static final class Venus {
+        public static final ResourceKey<Biome> VENUS_VALLEY = key("venus_valley");
+        public static final ResourceKey<Biome> VENUS_FLAT = key("venus_flat");
+        public static final ResourceKey<Biome> VENUS_MOUNTAIN = key("venus_mountain");
+    }
+
+    public static final ResourceKey<Biome> SPACE = ResourceKey.create(Registries.BIOME, Constant.id("space"));
 
     public static Biome createSpaceBiome(HolderGetter<PlacedFeature> holderGetter, HolderGetter<ConfiguredWorldCarver<?>> holderGetter2) {
         Biome.BiomeBuilder builder = new Biome.BiomeBuilder();
@@ -76,6 +78,10 @@ public final class GCBiomes {
         context.register(Moon.LUNAR_HIGHLANDS, MoonBiomes.createLunarHighlands(featureLookup, carverLookup));
         context.register(Moon.LUNAR_LOWLANDS, MoonBiomes.createLunarLowlands(featureLookup, carverLookup));
         context.register(Moon.OLIVINE_SPIKES, MoonBiomes.createOlivineSpikes(featureLookup, carverLookup));
+
+        context.register(Venus.VENUS_VALLEY, VenusBiomes.venus(featureLookup, carverLookup));
+        context.register(Venus.VENUS_FLAT, VenusBiomes.venus(featureLookup, carverLookup));
+        context.register(Venus.VENUS_MOUNTAIN, VenusBiomes.venus(featureLookup, carverLookup));
     }
 
     @Contract(pure = true)

@@ -28,9 +28,6 @@ import dev.galacticraft.mod.content.GCMachineTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class AdvancedSolarPanelBlockEntity extends AbstractSolarPanelBlockEntity {
     public AdvancedSolarPanelBlockEntity(BlockPos pos, BlockState state) {
         super(GCMachineTypes.ADVANCED_SOLAR_PANEL, pos, state);
@@ -51,8 +48,8 @@ public class AdvancedSolarPanelBlockEntity extends AbstractSolarPanelBlockEntity
         double cos = Math.cos(this.level.getSunAngle(1.0f));
         if (cos <= 0) return 0;
         if (cos <= 0.26761643317033024) {
-            return (long) (Galacticraft.CONFIG_MANAGER.get().solarPanelEnergyProductionRate() * (cos / 0.26761643317033024) * multiplier);
+            return (long) (Galacticraft.CONFIG.solarPanelEnergyProductionRate() * (cos / 0.26761643317033024) * multiplier);
         }
-        return (long) (Galacticraft.CONFIG_MANAGER.get().solarPanelEnergyProductionRate() * multiplier);
+        return (long) (Galacticraft.CONFIG.solarPanelEnergyProductionRate() * multiplier);
     }
 }

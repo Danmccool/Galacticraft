@@ -49,9 +49,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class CoalGeneratorBlockEntity extends MachineBlockEntity {
     public static final int CHARGE_SLOT = 0;
     public static final int INPUT_SLOT = 1;
@@ -94,7 +91,7 @@ public class CoalGeneratorBlockEntity extends MachineBlockEntity {
     @Override
     public @NotNull MachineStatus tick(@NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull ProfilerFiller profiler) {
         profiler.push("transaction");
-        this.energyStorage().insert((long) (Galacticraft.CONFIG_MANAGER.get().coalGeneratorEnergyProductionRate() * this.heat));
+        this.energyStorage().insert((long) (Galacticraft.CONFIG.coalGeneratorEnergyProductionRate() * this.heat));
         this.trySpreadEnergy(level, state);
         profiler.popPush("fuel_reset");
         if (this.fuelLength == 0) {
@@ -107,7 +104,7 @@ public class CoalGeneratorBlockEntity extends MachineBlockEntity {
             }
         }
         profiler.popPush("fuel_tick");
-        if (this.fuelTime++ >= this.fuelLength) {
+        if (++this.fuelTime >= this.fuelLength) {
             this.consumeFuel();
         }
         this.setHeat(Math.min(1, this.heat + 0.004));

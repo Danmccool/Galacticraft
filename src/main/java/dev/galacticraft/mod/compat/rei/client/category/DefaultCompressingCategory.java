@@ -26,6 +26,7 @@ import com.google.common.collect.Lists;
 import dev.galacticraft.mod.compat.rei.common.GalacticraftREIServerPlugin;
 import dev.galacticraft.mod.compat.rei.common.display.DefaultCompressingDisplay;
 import dev.galacticraft.mod.content.GCBlocks;
+import dev.galacticraft.mod.util.Translations;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
@@ -47,9 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 @Environment(EnvType.CLIENT)
 public class DefaultCompressingCategory implements DisplayCategory<DefaultCompressingDisplay> {
 
@@ -65,7 +63,7 @@ public class DefaultCompressingCategory implements DisplayCategory<DefaultCompre
 
     @Override
     public Component getTitle() {
-        return Component.translatable("category.recipe_viewer.compressing");
+        return Component.translatable(Translations.RecipeCategory.COMPRESSOR);
     }
 
     public @NotNull List<Widget> setupDisplay(DefaultCompressingDisplay recipeDisplay, Rectangle bounds) {

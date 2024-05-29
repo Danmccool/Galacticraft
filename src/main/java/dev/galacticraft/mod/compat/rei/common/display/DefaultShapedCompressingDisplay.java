@@ -23,17 +23,16 @@
 package dev.galacticraft.mod.compat.rei.common.display;
 
 import dev.galacticraft.mod.recipe.ShapedCompressingRecipe;
+import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class DefaultShapedCompressingDisplay implements DefaultCompressingDisplay {
     protected List<EntryIngredient> input;
     protected List<EntryIngredient> output;
@@ -43,14 +42,14 @@ public class DefaultShapedCompressingDisplay implements DefaultCompressingDispla
         this.output = output;
     }
 
-    public DefaultShapedCompressingDisplay(ShapedCompressingRecipe recipe) {
+    public DefaultShapedCompressingDisplay(RecipeHolder<ShapedCompressingRecipe> recipe) {
         this.input = new ArrayList<>();
-        recipe.getIngredients().forEach((ingredient) -> {
+        recipe.value().getIngredients().forEach((ingredient) -> {
             for (ItemStack stack : ingredient.getItems()) {
                 input.add(EntryIngredients.of(stack));
             }
         });
-        this.output = Collections.singletonList(EntryIngredients.of(recipe.getResultItem(null))); //fixme
+        this.output = Collections.singletonList(EntryIngredients.of(recipe.value().getResultItem(BasicDisplay.registryAccess())));
     }
 
     @Override

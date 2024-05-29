@@ -48,9 +48,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class OxygenCollectorBlockEntity extends MachineBlockEntity {
     public static final int CHARGE_SLOT = 0;
     public static final int OXYGEN_TANK = 0;
@@ -116,12 +113,12 @@ public class OxygenCollectorBlockEntity extends MachineBlockEntity {
         if (this.fluidStorage().getSlot(OXYGEN_TANK).isFull()) return GCMachineStatuses.OXYGEN_TANK_FULL;
         profiler.popPush("transaction");
         try {
-            if (this.energyStorage().canExtract(Galacticraft.CONFIG_MANAGER.get().oxygenCollectorEnergyConsumptionRate())) {
+            if (this.energyStorage().canExtract(Galacticraft.CONFIG.oxygenCollectorEnergyConsumptionRate())) {
                 profiler.push("collect");
                 this.collectionAmount = collectOxygen(level, pos);
                 profiler.pop();
                 if (this.collectionAmount > 0) {
-                    this.energyStorage().extract(Galacticraft.CONFIG_MANAGER.get().oxygenCollectorEnergyConsumptionRate());
+                    this.energyStorage().extract(Galacticraft.CONFIG.oxygenCollectorEnergyConsumptionRate());
                     this.fluidStorage().getSlot(OXYGEN_TANK).insert(Gases.OXYGEN, FluidUtil.bucketsToDroplets(this.collectionAmount));
                     return GCMachineStatuses.COLLECTING;
                 } else {

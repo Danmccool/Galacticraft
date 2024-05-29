@@ -25,6 +25,7 @@ package dev.galacticraft.mod.mixin.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.galacticraft.mod.Constant;
 import dev.galacticraft.mod.Galacticraft;
+import dev.galacticraft.mod.util.Translations;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
@@ -42,9 +43,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 @Mixin(TitleScreen.class)
 @Environment(EnvType.CLIENT)
 public abstract class AlphaWarningTitleScreenMixin extends Screen {
@@ -52,15 +50,15 @@ public abstract class AlphaWarningTitleScreenMixin extends Screen {
     @Unique
     private static boolean warningHidden = false;
     @Unique
-    private static final ResourceLocation ALPHA_WARNING_GC_TEXTURE = new ResourceLocation(Constant.MOD_ID, "textures/gui/alpha_warning.png");
+    private static final ResourceLocation ALPHA_WARNING_GC_TEXTURE = Constant.id("textures/gui/alpha_warning.png");
     @Unique
-    private static final Component ALPHA_WARNING_GC_HEADER = Component.translatable("ui.galacticraft.alpha_warning.header");
+    private static final Component ALPHA_WARNING_GC_HEADER = Component.translatable(Translations.Ui.ALPHA_WARNING_HEADER);
     @Unique
-    private static final Component ALPHA_WARNING_GC_CONTENT1 = Component.translatable("ui.galacticraft.alpha_warning.content1");
+    private static final Component ALPHA_WARNING_GC_CONTENT1 = Component.translatable(Translations.Ui.ALPHA_WARNING_1);
     @Unique
-    private static final Component ALPHA_WARNING_GC_CONTENT2 = Component.translatable("ui.galacticraft.alpha_warning.content2");
+    private static final Component ALPHA_WARNING_GC_CONTENT2 = Component.translatable(Translations.Ui.ALPHA_WARNING_2);
     @Unique
-    private static final Component ALPHA_WARNING_GC_CONTENT3 = Component.translatable("ui.galacticraft.alpha_warning.content3");
+    private static final Component ALPHA_WARNING_GC_CONTENT3 = Component.translatable(Translations.Ui.ALPHA_WARNING_3);
 
     protected AlphaWarningTitleScreenMixin(Component title) {
         super(title);
@@ -68,7 +66,7 @@ public abstract class AlphaWarningTitleScreenMixin extends Screen {
 
     @Inject(method = "init()V", at = @At("TAIL"))
     protected void init(CallbackInfo ci) {
-        if (Galacticraft.CONFIG_MANAGER.get().isAlphaWarningHidden()) {
+        if (Galacticraft.CONFIG.isAlphaWarningHidden()) {
             warningHidden = true;
         }
     }

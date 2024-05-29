@@ -22,18 +22,16 @@
 
 package dev.galacticraft.mod;
 
+import net.fabricmc.fabric.impl.datagen.FabricDataGenHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class GalacticraftMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
@@ -55,10 +53,10 @@ public class GalacticraftMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public List<String> getMixins() {
-        List<String> optionalMixins = new LinkedList<>();
+        List<String> optionalMixins = new ArrayList<>();
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            if (Galacticraft.CONFIG_MANAGER.get().isDebugLogEnabled()) {
-                optionalMixins.add(Constant.Mixin.STRUCTURE_POOL_DEBUG);
+            if (FabricDataGenHelper.ENABLED) {
+                optionalMixins.add(Constant.Mixin.DATAGEN_SKIP_README);
             }
         }
         return optionalMixins;

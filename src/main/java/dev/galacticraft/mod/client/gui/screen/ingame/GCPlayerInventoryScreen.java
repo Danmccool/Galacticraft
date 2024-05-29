@@ -27,6 +27,7 @@ import dev.galacticraft.api.gas.Gases;
 import dev.galacticraft.mod.Constant;
 import dev.galacticraft.mod.screen.GCPlayerInventoryMenu;
 import dev.galacticraft.mod.util.DrawableUtil;
+import dev.galacticraft.mod.util.Translations;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -39,9 +40,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class GCPlayerInventoryScreen extends AbstractContainerScreen<GCPlayerInventoryMenu> {
     public GCPlayerInventoryScreen(GCPlayerInventoryMenu handler, Inventory inv, Component title) {
         super(handler, inv, Component.empty());
@@ -60,7 +58,7 @@ public class GCPlayerInventoryScreen extends AbstractContainerScreen<GCPlayerInv
                         amount += view.getAmount();
                     }
                 }
-                graphics.renderTooltip(this.font, Component.translatable("ui.galacticraft.player_inv_screen.oxygen_tank_level", 1, amount, capacity), mouseX, mouseY);
+                graphics.renderTooltip(this.font, Component.translatable(Translations.Ui.OXYGEN_TANK_LEVEL, 1, amount, capacity), mouseX, mouseY);
             }
         } else if (DrawableUtil.isWithin(mouseX, mouseY, this.leftPos + 152, this.topPos + 8, Constant.TextureCoordinate.OVERLAY_WIDTH, Constant.TextureCoordinate.OVERLAY_HEIGHT)) {
             Storage<FluidVariant> storage = ContainerItemContext.withConstant(this.menu.inventory.getItem(GCPlayerInventoryMenu.OXYGEN_TANK_2_SLOT)).find(FluidStorage.ITEM);
@@ -73,7 +71,7 @@ public class GCPlayerInventoryScreen extends AbstractContainerScreen<GCPlayerInv
                         amount += view.getAmount();
                     }
                 }
-                graphics.renderTooltip(this.font, Component.translatable("ui.galacticraft.player_inv_screen.oxygen_tank_level", 2, amount, capacity), mouseX, mouseY);
+                graphics.renderTooltip(this.font, Component.translatable(Translations.Ui.OXYGEN_TANK_LEVEL, 2, amount, capacity), mouseX, mouseY);
             }
         }
         super.renderTooltip(graphics, mouseX, mouseY);
@@ -81,7 +79,6 @@ public class GCPlayerInventoryScreen extends AbstractContainerScreen<GCPlayerInv
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-        this.renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, delta);
         this.renderTooltip(graphics, mouseX, mouseY);
     }
@@ -122,7 +119,7 @@ public class GCPlayerInventoryScreen extends AbstractContainerScreen<GCPlayerInv
             }
         }
 
-        InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, this.leftPos + 51, this.topPos + 75, 30, (float) (this.leftPos + 51) - mouseX, (float) (this.topPos + 75 - 50) - mouseY, this.minecraft.player);
+        InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, this.leftPos + 26, this.topPos + 8, this.leftPos + 75, this.topPos + 78, 30, 0.0625F, mouseX, mouseY, this.minecraft.player);
     }
 
     @Override

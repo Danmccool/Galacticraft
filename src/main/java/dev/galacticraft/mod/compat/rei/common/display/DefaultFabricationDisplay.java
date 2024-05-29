@@ -31,6 +31,7 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -38,17 +39,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class DefaultFabricationDisplay extends BasicDisplay {
 
     protected DefaultFabricationDisplay(List<EntryIngredient> inputs, List<EntryIngredient> outputs, Optional<ResourceLocation> location) {
         super(inputs, outputs, location);
     }
 
-    public DefaultFabricationDisplay(@Nullable FabricationRecipe recipe) {
-        super(getInputs(recipe), recipe == null ? Collections.emptyList() : Collections.singletonList(EntryIngredients.of(recipe.getResultItem(null)))); //fixme
+    public DefaultFabricationDisplay(@Nullable RecipeHolder<FabricationRecipe> recipe) {
+        super(getInputs(recipe), recipe == null ? Collections.emptyList() : Collections.singletonList(EntryIngredients.of(recipe.value().getResultItem(registryAccess()))));
     }
 
 
@@ -61,14 +59,14 @@ public class DefaultFabricationDisplay extends BasicDisplay {
         return GalacticraftREIServerPlugin.CIRCUIT_FABRICATION;
     }
 
-    private static List<EntryIngredient> getInputs(@Nullable FabricationRecipe recipe) {
+    private static List<EntryIngredient> getInputs(@Nullable RecipeHolder<FabricationRecipe> recipe) {
         if (recipe == null) return Collections.emptyList();
         List<EntryIngredient> list = new ArrayList<>(5);
         list.add(EntryIngredients.of(Items.DIAMOND));
         list.add(EntryIngredients.of(GCItems.RAW_SILICON));
         list.add(EntryIngredients.of(GCItems.RAW_SILICON));
         list.add(EntryIngredients.of(Items.REDSTONE));
-        list.add(EntryIngredients.ofIngredient(recipe.getIngredients().get(0)));
+        list.add(EntryIngredients.ofIngredient(recipe.value().getIngredients().get(0)));
         return list;
     }
 }

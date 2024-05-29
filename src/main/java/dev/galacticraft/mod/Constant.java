@@ -38,15 +38,13 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public interface Constant {
     String MOD_ID = "galacticraft";
     String COMMON_NAMESPACE = "c";
     Logger LOGGER = LogManager.getLogger("Galacticraft");
 
-    float RADIANS_TO_DEGREES = 180F / 3.1415927F;
+    double RADIANS_TO_DEGREES = 180.0 / Math.PI;
+    int OVERWORLD_SKYPROVIDER_STARTHEIGHT = 200;
 
     @Contract(value = "_ -> new", pure = true)
     static @NotNull ResourceLocation id(String id) {
@@ -65,6 +63,7 @@ public interface Constant {
         // Natural
         String MOON_TURF = "moon_turf";
         String MOON_SURFACE_ROCK = "moon_surface_rock";
+        String MOON_DUNGEON_BRICK = "moon_dungeon_brick";
         String MOON_ROCK = "moon_rock";
         String MOON_ROCK_SLAB = "moon_rock_slab";
         String MOON_ROCK_STAIRS = "moon_rock_stairs";
@@ -142,85 +141,14 @@ public interface Constant {
 
         // Decorative BLocks
         String ALUMINUM_DECORATION = "aluminum_decoration";
-        String ALUMINUM_DECORATION_SLAB = "aluminum_decoration_slab";
-        String ALUMINUM_DECORATION_STAIRS = "aluminum_decoration_stairs";
-        String ALUMINUM_DECORATION_WALL = "aluminum_decoration_wall";
-        String DETAILED_ALUMINUM_DECORATION = "detailed_aluminum_decoration";
-        String DETAILED_ALUMINUM_DECORATION_SLAB = "detailed_aluminum_decoration_slab";
-        String DETAILED_ALUMINUM_DECORATION_STAIRS = "detailed_aluminum_decoration_stairs";
-        String DETAILED_ALUMINUM_DECORATION_WALL = "detailed_aluminum_decoration_wall";
-
         String BRONZE_DECORATION = "bronze_decoration";
-        String BRONZE_DECORATION_SLAB = "bronze_decoration_slab";
-        String BRONZE_DECORATION_STAIRS = "bronze_decoration_stairs";
-        String BRONZE_DECORATION_WALL = "bronze_decoration_wall";
-        String DETAILED_BRONZE_DECORATION = "detailed_bronze_decoration";
-        String DETAILED_BRONZE_DECORATION_SLAB = "detailed_bronze_decoration_slab";
-        String DETAILED_BRONZE_DECORATION_STAIRS = "detailed_bronze_decoration_stairs";
-        String DETAILED_BRONZE_DECORATION_WALL = "detailed_bronze_decoration_wall";
-
         String COPPER_DECORATION = "copper_decoration";
-        String COPPER_DECORATION_SLAB = "copper_decoration_slab";
-        String COPPER_DECORATION_STAIRS = "copper_decoration_stairs";
-        String COPPER_DECORATION_WALL = "copper_decoration_wall";
-        String DETAILED_COPPER_DECORATION = "detailed_copper_decoration";
-        String DETAILED_COPPER_DECORATION_SLAB = "detailed_copper_decoration_slab";
-        String DETAILED_COPPER_DECORATION_STAIRS = "detailed_copper_decoration_stairs";
-        String DETAILED_COPPER_DECORATION_WALL = "detailed_copper_decoration_wall";
-
         String IRON_DECORATION = "iron_decoration";
-        String IRON_DECORATION_SLAB = "iron_decoration_slab";
-        String IRON_DECORATION_STAIRS = "iron_decoration_stairs";
-        String IRON_DECORATION_WALL = "iron_decoration_wall";
-        String DETAILED_IRON_DECORATION = "detailed_iron_decoration";
-        String DETAILED_IRON_DECORATION_SLAB = "detailed_iron_decoration_slab";
-        String DETAILED_IRON_DECORATION_STAIRS = "detailed_iron_decoration_stairs";
-        String DETAILED_IRON_DECORATION_WALL = "detailed_iron_decoration_wall";
-
         String METEORIC_IRON_DECORATION = "meteoric_iron_decoration";
-        String METEORIC_IRON_DECORATION_SLAB = "meteoric_iron_decoration_slab";
-        String METEORIC_IRON_DECORATION_STAIRS = "meteoric_iron_decoration_stairs";
-        String METEORIC_IRON_DECORATION_WALL = "meteoric_iron_decoration_wall";
-        String DETAILED_METEORIC_IRON_DECORATION = "detailed_meteoric_iron_decoration";
-        String DETAILED_METEORIC_IRON_DECORATION_SLAB = "detailed_meteoric_iron_decoration_slab";
-        String DETAILED_METEORIC_IRON_DECORATION_STAIRS = "detailed_meteoric_iron_decoration_stairs";
-        String DETAILED_METEORIC_IRON_DECORATION_WALL = "detailed_meteoric_iron_decoration_wall";
-
         String STEEL_DECORATION = "steel_decoration";
-        String STEEL_DECORATION_SLAB = "steel_decoration_slab";
-        String STEEL_DECORATION_STAIRS = "steel_decoration_stairs";
-        String STEEL_DECORATION_WALL = "steel_decoration_wall";
-        String DETAILED_STEEL_DECORATION = "detailed_steel_decoration";
-        String DETAILED_STEEL_DECORATION_SLAB = "detailed_steel_decoration_slab";
-        String DETAILED_STEEL_DECORATION_STAIRS = "detailed_steel_decoration_stairs";
-        String DETAILED_STEEL_DECORATION_WALL = "detailed_steel_decoration_wall";
-
         String TIN_DECORATION = "tin_decoration";
-        String TIN_DECORATION_SLAB = "tin_decoration_slab";
-        String TIN_DECORATION_STAIRS = "tin_decoration_stairs";
-        String TIN_DECORATION_WALL = "tin_decoration_wall";
-        String DETAILED_TIN_DECORATION = "detailed_tin_decoration";
-        String DETAILED_TIN_DECORATION_SLAB = "detailed_tin_decoration_slab";
-        String DETAILED_TIN_DECORATION_STAIRS = "detailed_tin_decoration_stairs";
-        String DETAILED_TIN_DECORATION_WALL = "detailed_tin_decoration_wall";
-
         String TITANIUM_DECORATION = "titanium_decoration";
-        String TITANIUM_DECORATION_SLAB = "titanium_decoration_slab";
-        String TITANIUM_DECORATION_STAIRS = "titanium_decoration_stairs";
-        String TITANIUM_DECORATION_WALL = "titanium_decoration_wall";
-        String DETAILED_TITANIUM_DECORATION = "detailed_titanium_decoration";
-        String DETAILED_TITANIUM_DECORATION_SLAB = "detailed_titanium_decoration_slab";
-        String DETAILED_TITANIUM_DECORATION_STAIRS = "detailed_titanium_decoration_stairs";
-        String DETAILED_TITANIUM_DECORATION_WALL = "detailed_titanium_decoration_wall";
-
         String DARK_DECORATION = "dark_decoration";
-        String DARK_DECORATION_SLAB = "dark_decoration_slab";
-        String DARK_DECORATION_STAIRS = "dark_decoration_stairs";
-        String DARK_DECORATION_WALL = "dark_decoration_wall";
-        String DETAILED_DARK_DECORATION = "detailed_dark_decoration";
-        String DETAILED_DARK_DECORATION_SLAB = "detailed_dark_decoration_slab";
-        String DETAILED_DARK_DECORATION_STAIRS = "detailed_dark_decoration_stairs";
-        String DETAILED_DARK_DECORATION_WALL = "detailed_dark_decoration_wall";
 
         String GRATING = "grating";
         String TIN_LADDER = "tin_ladder";
@@ -261,30 +189,32 @@ public interface Constant {
         String TREASURE_CHEST_TIER_2 = "treasure_chest_tier_2";
         String TREASURE_CHEST_TIER_3 = "treasure_chest_tier_3";
         String CRASHED_PROBE_BLOCK = "crashed_probe";
+        String BOSS_SPAWNER = "boss_spawner";
 
         // Moon Cheese
-        String MOON_CHEESE_BLOCK = "moon_cheese_block";
-        String CANDLE_MOON_CHEESE_BLOCK = "candle_moon_cheese_block";
-        String WHITE_CANDLE_MOON_CHEESE_BLOCK = "white_candle_moon_cheese_block";
-        String ORANGE_CANDLE_MOON_CHEESE_BLOCK = "orange_candle_moon_cheese_block";
-        String MAGENTA_CANDLE_MOON_CHEESE_BLOCK = "magenta_candle_moon_cheese_block";
-        String LIGHT_BLUE_CANDLE_MOON_CHEESE_BLOCK = "light_blue_candle_moon_cheese_block";
-        String YELLOW_CANDLE_MOON_CHEESE_BLOCK = "yellow_candle_moon_cheese_block";
-        String LIME_CANDLE_MOON_CHEESE_BLOCK = "lime_candle_moon_cheese_block";
-        String PINK_CANDLE_MOON_CHEESE_BLOCK = "pink_candle_moon_cheese_block";
-        String GRAY_CANDLE_MOON_CHEESE_BLOCK = "gray_candle_moon_cheese_block";
-        String LIGHT_GRAY_CANDLE_MOON_CHEESE_BLOCK = "light_gray_candle_moon_cheese_block";
-        String CYAN_CANDLE_MOON_CHEESE_BLOCK = "cyan_candle_moon_cheese_block";
-        String PURPLE_CANDLE_MOON_CHEESE_BLOCK = "purple_candle_moon_cheese_block";
-        String BLUE_CANDLE_MOON_CHEESE_BLOCK = "blue_candle_moon_cheese_block";
-        String BROWN_CANDLE_MOON_CHEESE_BLOCK = "brown_candle_moon_cheese_block";
-        String GREEN_CANDLE_MOON_CHEESE_BLOCK = "green_candle_moon_cheese_block";
-        String RED_CANDLE_MOON_CHEESE_BLOCK = "red_candle_moon_cheese_block";
-        String BLACK_CANDLE_MOON_CHEESE_BLOCK = "black_candle_moon_cheese_block";
+        String MOON_CHEESE_WHEEL = "moon_cheese_block";
+        String CANDLE_MOON_CHEESE_WHEEL = "candle_moon_cheese_block";
+        String WHITE_CANDLE_MOON_CHEESE_WHEEL = "white_candle_moon_cheese_block";
+        String ORANGE_CANDLE_MOON_CHEESE_WHEEL = "orange_candle_moon_cheese_block";
+        String MAGENTA_CANDLE_MOON_CHEESE_WHEEL = "magenta_candle_moon_cheese_block";
+        String LIGHT_BLUE_CANDLE_MOON_CHEESE_WHEEL = "light_blue_candle_moon_cheese_block";
+        String YELLOW_CANDLE_MOON_CHEESE_WHEEL = "yellow_candle_moon_cheese_block";
+        String LIME_CANDLE_MOON_CHEESE_WHEEL = "lime_candle_moon_cheese_block";
+        String PINK_CANDLE_MOON_CHEESE_WHEEL = "pink_candle_moon_cheese_block";
+        String GRAY_CANDLE_MOON_CHEESE_WHEEL = "gray_candle_moon_cheese_block";
+        String LIGHT_GRAY_CANDLE_MOON_CHEESE_WHEEL = "light_gray_candle_moon_cheese_block";
+        String CYAN_CANDLE_MOON_CHEESE_WHEEL = "cyan_candle_moon_cheese_block";
+        String PURPLE_CANDLE_MOON_CHEESE_WHEEL = "purple_candle_moon_cheese_block";
+        String BLUE_CANDLE_MOON_CHEESE_WHEEL = "blue_candle_moon_cheese_block";
+        String BROWN_CANDLE_MOON_CHEESE_WHEEL = "brown_candle_moon_cheese_block";
+        String GREEN_CANDLE_MOON_CHEESE_WHEEL = "green_candle_moon_cheese_block";
+        String RED_CANDLE_MOON_CHEESE_WHEEL = "red_candle_moon_cheese_block";
+        String BLACK_CANDLE_MOON_CHEESE_WHEEL = "black_candle_moon_cheese_block";
 
         // Liquids
         String FUEL = "fuel";
         String CRUDE_OIL = "crude_oil";
+        String SULFURIC_ACID = "sulfuric_acid";
 
         // Machines
         String CIRCUIT_FABRICATOR = "circuit_fabricator";
@@ -370,7 +300,7 @@ public interface Constant {
         String LIQUID_OXYGEN = "liquid_oxygen";
 
         static ResourceLocation getId(String s) {
-            return new ResourceLocation(Constant.MOD_ID, "block/" + s);
+            return Constant.id("block/" + s);
         }
     }
 
@@ -427,7 +357,7 @@ public interface Constant {
         String COPPER_CANISTER = "copper_canister";
         String TIN_CANISTER = "tin_canister";
         String THERMAL_CLOTH = "thermal_cloth";
-        String ISOTHERMAL_FABRIC = "thermal_cloth_t2";
+        String ISOTHERMAL_FABRIC = "isothermal_fabric";
         String ORION_DRIVE = "orion_drive";
         String ATMOSPHERIC_VALVE = "atmospheric_valve";
         String AMBIENT_THERMAL_CONTROLLER = "ambient_thermal_controller";
@@ -488,30 +418,17 @@ public interface Constant {
         String TITANIUM_HOE = "titanium_hoe";
 
         String STANDARD_WRENCH = "standard_wrench";
+        String TITANTIUM_UPGRADE_SMITHING_TEMPLATE = "titanium_upgrade_smithing_template";
         String BATTERY = "battery";
         String INFINITE_BATTERY = "infinite_battery";
 
         //Fluid buckets
         String CRUDE_OIL_BUCKET = "crude_oil_bucket";
         String FUEL_BUCKET = "fuel_bucket";
+        String SULFURIC_ACID_BUCKET = "sulfuric_acid_bucket";
 
         //GC INVENTORY
         String PARACHUTE = "parachute";
-        String ORANGE_PARACHUTE = "orange_parachute";
-        String MAGENTA_PARACHUTE = "magenta_parachute";
-        String LIGHT_BLUE_PARACHUTE = "light_blue_parachute";
-        String YELLOW_PARACHUTE = "yellow_parachute";
-        String LIME_PARACHUTE = "lime_parachute";
-        String PINK_PARACHUTE = "pink_parachute";
-        String GRAY_PARACHUTE = "gray_parachute";
-        String LIGHT_GRAY_PARACHUTE = "light_gray_parachute";
-        String CYAN_PARACHUTE = "cyan_parachute";
-        String PURPLE_PARACHUTE = "purple_parachute";
-        String BLUE_PARACHUTE = "blue_parachute";
-        String BROWN_PARACHUTE = "brown_parachute";
-        String GREEN_PARACHUTE = "green_parachute";
-        String RED_PARACHUTE = "red_parachute";
-        String BLACK_PARACHUTE = "black_parachute";
 
         String OXYGEN_MASK = "oxygen_mask";
         String OXYGEN_GEAR = "oxygen_gear";
@@ -556,7 +473,7 @@ public interface Constant {
         String LEGACY_MUSIC_DISC_SPACERACE = "legacy_music_disc_spacerace";
         String NOSE_CONE = "nose_cone";
         String HEAVY_NOSE_CONE = "heavy_nose_cone";
-        String ROCKET_FINS = "rocket_fins";
+        String ROCKET_FIN = "rocket_fin";
         String ROCKET_ENGINE = "rocket_engine";
         String BASIC_ROCKET_CONE_SCHEMATIC = "basic_rocket_cone_schematic";
         String BASIC_ROCKET_BODY_SCHEMATIC = "basic_rocket_body_schematic";
@@ -574,42 +491,12 @@ public interface Constant {
         String CRYOGENIC_PARTICLE = "cryogenic_particle";
         String LANDER_FLAME = "lander_flame_particle";
         String SPARK = "spark";
-    }
-
-    interface Config {
-        String TITLE = "config.galacticraft.title";
-        String RESET = "config.galacticraft.reset";
-
-        String DEBUG = "config.galacticraft.debug";
-        String DEBUG_LOGGING = "config.galacticraft.debug.logging";
-        String HIDE_ALPHA_WARNING = "config.galacticraft.debug.hide_alpha_warning";
-
-        String ENERGY = "config.galacticraft.energy";
-
-        String WIRES = "config.galacticraft.energy.wires";
-        String WIRE_ENERGY_TRANSFER_LIMIT = "config.galacticraft.energy.wires.transfer_limit";
-        String HEAVY_WIRE_ENERGY_TRANSFER_LIMIT = "config.galacticraft.energy.wires.heavy_transfer_limit";
-
-        String MACHINES = "config.galacticraft.energy.machines";
-        String COAL_GENERATOR_ENERGY_PRODUCTION_RATE = "config.galacticraft.energy.machines.coal_generator_energy_production_rate";
-        String SOLAR_PANEL_ENERGY_PRODUCTION_RATE = "config.galacticraft.energy.machines.solar_panel_energy_production_rate";
-        String CIRCUIT_FABRICATOR_ENERGY_CONSUMPTION_RATE = "config.galacticraft.energy.machines.circuit_fabricator_energy_consumption_rate";
-        String ELECTRIC_COMPRESSOR_ENERGY_CONSUMPTION_RATE = "config.galacticraft.energy.machines.electric_compressor_energy_consumption_rate";
-        String OXYGEN_COLLECTOR_ENERGY_CONSUMPTION_RATE = "config.galacticraft.energy.machines.oxygen_collector_energy_consumption_rate";
-        String REFINERY_ENERGY_CONSUMPTION_RATE = "config.galacticraft.energy.machines.refinery_energy_consumption_rate";
-        String ELECTRIC_FURNACE_ENERGY_CONSUMPTION_RATE = "config.galacticraft.energy.machines.electric_furnace_energy_consumption_rate";
-        String ENERGY_STORAGE_MODULE_STORAGE_SIZE = "config.galacticraft.energy.machines.energy_storage_module_storage_size";
-        String ENERGY_STORAGE_SIZE = "config.galacticraft.energy.machines.energy_storage_size";
-        String OXYGEN_COMPRESSOR_ENERGY_CONSUMPTION_RATE = "config.galacticraft.energy.machines.oxygen_compressor_energy_consumption_rate";
-        String OXYGEN_DECOMPRESSOR_ENERGY_CONSUMPTION_RATE = "config.galacticraft.energy.machines.oxygen_decompressor_energy_consumption_rate";
-
-        String CLIENT = "config.galacticraft.client";
-
-        String PLAYER = "config.galacticraft.player";
-        String PLAYER_LIFE_SUPPORT = "config.galacticraft.lifesupport";
-        String PLAYER_OXYGEN_CONSUMPTION_RATE = "config.galacticraft.player.lifesupport.oxygen_consumption_rate";
-        String SKYBOX = "config.galacticraft.client.skybox";
-        String MULTICOLOR_STARS = "config.galacticraft.client.skybox.multicolor_stars";
+        String DRIPPING_SULFURIC_ACID = "dripping_sulfuric_acid";
+        String FALLING_SULFURIC_ACID = "falling_sulfuric_acid";
+        String LAUNCH_SMOKE = "launch_smoke";
+        String LAUNCH_FLAME = "launch_flame";
+        String LAUNCH_FLAME_LAUNCHED = "launch_flame_launched";
+        String ACID_VAPOR_PARTICLE = "acid_vapor";
     }
 
     interface ScreenTexture {
@@ -661,6 +548,7 @@ public interface Constant {
         String T1_ROCKET = "t1_rocket";
         String ROCKET = "rocket";
         String LANDER = "lander";
+        String BUGGY = "buggy";
         String PARACHEST = "parachest";
         String BUBBLE = "bubble";
         String EVOLVED_SKELETON = "evolved_skeleton";
@@ -668,6 +556,7 @@ public interface Constant {
         String EVOLVED_PILLAGER = "evolved_pillager";
         String EVOLVED_EVOKER = "evolved_evoker";
         String EVOLVED_VINDICATOR = "evolved_vindicator";
+        String EVOLVED_SKELETON_BOSS = "evolved_skeleton_boss";
         String GREY = "grey";
         String ARCH_GREY = "arch_grey";
         String RUMBLER = "rumbler";
@@ -686,6 +575,7 @@ public interface Constant {
         String GAZER = "textures/entity/gazer.png";
         String LANDER = "textures/entity/lander.png";
         String SLIMELING = "textures/entity/slimeling.png";
+        String SKELETON_BOSS = "textures/entity/skeletonboss.png";
     }
 
     interface TextureCoordinate {
@@ -786,7 +676,7 @@ public interface Constant {
             Style DARK_BLUE_STYLE = Style.EMPTY.withColor(ChatFormatting.DARK_BLUE);
 
             static int getStorageLevelColor(double scale) {
-                return ((int)(255 * scale) << 16) + (((int)(255 * ( 1.0 - scale))) << 8);
+                return ((int) (255 * scale) << 16) + (((int) (255 * (1.0 - scale))) << 8);
             }
 
             static Style getStorageLevelStyle(double scale) {
@@ -796,44 +686,6 @@ public interface Constant {
             static Style getRainbow(int ticks) {
                 return Style.EMPTY.withColor(TextColor.fromRgb(Mth.hsvToRgb(ticks / 1000.0f, 1, 1)));
             }
-        }
-
-        interface TranslationKey {
-            String HYDROGEN = "gas.galacticraft.hydrogen";
-            String NITROGEN = "gas.galacticraft.nitrogen";
-            String OXYGEN = "gas.galacticraft.oxygen";
-            String CARBON_DIOXIDE = "gas.galacticraft.carbon_dioxide";
-            String CARBON_MONOXIDE = "gas.galacticraft.carbon_monoxide";
-            String WATER_VAPOR = "gas.galacticraft.water_vapor";
-            String METHANE = "gas.galacticraft.methane";
-            String HELIUM = "gas.galacticraft.helium";
-            String ARGON = "gas.galacticraft.argon";
-            String NITROUS_OXIDE = "gas.galacticraft.nitrous_oxide";
-            String NEON = "gas.galacticraft.neon";
-            String KRYPTON = "gas.galacticraft.krypton";
-            String XENON = "gas.galacticraft.xenon";
-            String OZONE = "gas.galacticraft.ozone";
-            String NITROUS_DIOXIDE = "gas.galacticraft.nitrous_dioxide";
-            String IODINE = "gas.galacticraft.iodine";
-            String NOT_ENOUGH_LEAVES = "ui.galacticraft.machine.status.not_enough_leaves";
-            String ACTIVE = "ui.galacticraft.machine.status.active";
-            String IDLE = "ui.galacticraft.machine.status.idle";
-            String WARMING = "ui.galacticraft.machine.status.warming";
-            String INACTIVE = "ui.galacticraft.machine.status.inactive";
-            String NOT_ENOUGH_ENERGY = "ui.galacticraft.machine.status.not_enough_energy";
-            String OFF = "ui.galacticraft.machine.status.off";
-            String PROCESSING = "ui.galacticraft.machine.status.processing";
-            String COLLECTING = "ui.galacticraft.machine.status.collecting";
-            String COMPRESSING = "ui.galacticraft.machine.status.compressing";
-            String DECOMPRESSING = "ui.galacticraft.machine.status.decompressing";
-            String PARTIALLY_BLOCKED = "ui.galacticraft.machine.status.partially_blocked";
-            String NIGHT = "ui.galacticraft.machine.status.night";
-            String FULL = "ui.galacticraft.machine.status.full";
-            String EMPTY_CANISTER = "ui.galacticraft.machine.status.empty_canister";
-            String BLOCKED = "ui.galacticraft.machine.status.blocked";
-            String DISTRIBUTING = "ui.galacticraft.machine.status.distributing";
-            String NOT_ENOUGH_OXYGEN = "ui.galacticraft.machine.status.not_enough_oxygen";
-            String NOT_ENOUGH_ITEMS = "ui.galacticraft.machine.status.not_enough_items";
         }
     }
 
@@ -889,9 +741,11 @@ public interface Constant {
 
     @ApiStatus.Internal
     interface Misc {
-        ResourceLocation INVALID = new ResourceLocation(Constant.MOD_ID, "invalid");
+        ResourceLocation INVALID = Constant.id("invalid");
         ResourceLocation EMPTY = new ResourceLocation("empty");
         Direction[] DIRECTIONS = Direction.values();
+        Direction[] HORIZONTALS = {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
+        Direction[] VERTICALS = {Direction.UP, Direction.DOWN};
         String LOGGER_PREFIX = "[Galacticraft] ";
         boolean DEBUG = false;
         int MAX_STRING_READ = 32767;
@@ -899,12 +753,13 @@ public interface Constant {
 
     @ApiStatus.Internal
     interface Mixin {
-        String STRUCTURE_POOL_DEBUG = "StructurePoolGeneratorMixin";
+        String DATAGEN_SKIP_README = "HashCacheMixin";
     }
 
     interface Recipe {
         String FABRICATION = "fabrication";
         String COMPRESSING = "compressing";
+
         interface Serializer {
             String FABRICATION = "fabrication";
             String COMPRESSING_SHAPELESS = "compressing_shapeless";
@@ -943,19 +798,16 @@ public interface Constant {
         ResourceLocation OPEN_GC_INVENTORY = id("open_gc_inv");
         ResourceLocation OPEN_GC_ROCKET = id("open_gc_rocket");
         ResourceLocation CREATE_SATELLITE = id("create_satellite");
-        ResourceLocation ROCKET_JUMP = id("rocket_jump");
-        ResourceLocation ROCKET_PITCH = id("rocket_pitch");
-        ResourceLocation ROCKET_YAW = id("rocket_yaw");
         ResourceLocation OPEN_SCREEN = id("open_screen");
+        ResourceLocation PLANET_MENU_PACKET = id("planet_menu_open");
         ResourceLocation SELECT_PART = id("select_part");
 
-        ResourceLocation LANDER_PITCH = id("lander_pitch");
-        ResourceLocation LANDER_YAW = id("lander_yaw");
-        ResourceLocation LANDER_ACCERLERATE = id("lander_accelerate");
-        ResourceLocation ENTITY_UPDATE = id("entity_update");
+        ResourceLocation CONTROLLABLE_ENTITY = id("controllable_entity");
         ResourceLocation PLANET_TP = id("planet_tp");
+        ResourceLocation ROCKET_SPAWN = id("rocket_spawn");
         ResourceLocation FOOTPRINT = id("footprint");
         ResourceLocation FOOTPRINT_REMOVED = id("footprint_removed");
+        ResourceLocation RESET_THIRD_PERSON = id("reset_camera_type");
     }
 
     interface Structure {
@@ -965,7 +817,23 @@ public interface Constant {
     interface Command {
         String HOUSTON = "gchouston";
         String DIMENSION_TP = "dimensiontp";
-        String DIMENSION_TP_ALIAS = "dimtp";
+        String DIMTP = "dimtp";
         String OPEN_CELESTIAL_SCREEN = "opencelestialscreen";
+    }
+
+    interface Attachments {
+        String SERVER_PLAYER = "server_player";
+        String CLIENT_PLAYER = "client_player";
+    }
+
+    interface Teleporters {
+        String LANDER = "lander";
+        String OVERWORLD = "overworld";
+    }
+
+    interface Triggers {
+        String ROCKET_LAUNCH = "launch_rocket";
+        String FIND_MOON_BOSS = "boss_moon";
+        String CREATE_SPACE_STATION = "create_space_station";
     }
 }

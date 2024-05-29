@@ -23,6 +23,7 @@
 package dev.galacticraft.mod.content.block.machine;
 
 import dev.galacticraft.machinelib.api.block.MachineBlock;
+import dev.galacticraft.mod.Constant;
 import dev.galacticraft.mod.content.block.entity.machine.OxygenCollectorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -31,12 +32,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Vector3f;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class OxygenCollectorBlock extends MachineBlock<OxygenCollectorBlockEntity> {
     public OxygenCollectorBlock(Properties settings) {
-        super(settings, OxygenCollectorBlockEntity::new);
+        super(settings, Constant.id(Constant.Block.OXYGEN_COLLECTOR));
     }
 
     @Override

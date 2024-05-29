@@ -25,12 +25,15 @@ package dev.galacticraft.mod.content.item;
 import dev.galacticraft.mod.Constant;
 import dev.galacticraft.mod.content.GCBlocks;
 import dev.galacticraft.mod.content.GCFluids;
-import dev.galacticraft.mod.content.GCRocketParts;
 import dev.galacticraft.mod.content.GCRegistry;
+import dev.galacticraft.mod.content.GCRocketParts;
+import dev.galacticraft.mod.util.Translations;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -38,9 +41,6 @@ import net.minecraft.world.level.block.DispenserBlock;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 @SuppressWarnings("unused")
 public class GCItems {
     public static final GCRegistry<Item> ITEMS = new GCRegistry<>(BuiltInRegistries.ITEM);
@@ -54,87 +54,6 @@ public class GCItems {
     // LANTERNS
     public static final Item GLOWSTONE_LANTERN = ITEMS.register(Constant.Block.GLOWSTONE_LANTERN, new BlockItem(GCBlocks.GLOWSTONE_LANTERN, new Item.Properties()));
     public static final Item UNLIT_LANTERN = ITEMS.register(Constant.Block.UNLIT_LANTERN, new BlockItem(GCBlocks.UNLIT_LANTERN, new Item.Properties()));
-
-    // DECORATION BLOCKS
-    public static final Item ALUMINUM_DECORATION = ITEMS.register(Constant.Block.ALUMINUM_DECORATION, new BlockItem(GCBlocks.ALUMINUM_DECORATION, new Item.Properties()));
-    public static final Item ALUMINUM_DECORATION_SLAB = ITEMS.register(Constant.Block.ALUMINUM_DECORATION_SLAB, new BlockItem(GCBlocks.ALUMINUM_DECORATION_SLAB, new Item.Properties()));
-    public static final Item ALUMINUM_DECORATION_STAIRS = ITEMS.register(Constant.Block.ALUMINUM_DECORATION_STAIRS, new BlockItem(GCBlocks.ALUMINUM_DECORATION_STAIRS, new Item.Properties()));
-    public static final Item ALUMINUM_DECORATION_WALL = ITEMS.register(Constant.Block.ALUMINUM_DECORATION_WALL, new BlockItem(GCBlocks.ALUMINUM_DECORATION_WALL, new Item.Properties()));
-    public static final Item DETAILED_ALUMINUM_DECORATION_SLAB = new BlockItem(GCBlocks.DETAILED_ALUMINUM_DECORATION_SLAB, new Item.Properties());
-    public static final Item DETAILED_ALUMINUM_DECORATION_STAIRS = new BlockItem(GCBlocks.DETAILED_ALUMINUM_DECORATION_STAIRS, new Item.Properties());
-    public static final Item DETAILED_ALUMINUM_DECORATION_WALL = new BlockItem(GCBlocks.DETAILED_ALUMINUM_DECORATION_WALL, new Item.Properties());
-
-    public static final Item BRONZE_DECORATION = new BlockItem(GCBlocks.BRONZE_DECORATION, new Item.Properties());
-    public static final Item BRONZE_DECORATION_SLAB = new BlockItem(GCBlocks.BRONZE_DECORATION_SLAB, new Item.Properties());
-    public static final Item BRONZE_DECORATION_STAIRS = new BlockItem(GCBlocks.BRONZE_DECORATION_STAIRS, new Item.Properties());
-    public static final Item BRONZE_DECORATION_WALL = new BlockItem(GCBlocks.BRONZE_DECORATION_WALL, new Item.Properties());
-    public static final Item DETAILED_BRONZE_DECORATION = new BlockItem(GCBlocks.DETAILED_BRONZE_DECORATION, new Item.Properties());
-    public static final Item DETAILED_BRONZE_DECORATION_SLAB = new BlockItem(GCBlocks.DETAILED_BRONZE_DECORATION_SLAB, new Item.Properties());
-    public static final Item DETAILED_BRONZE_DECORATION_STAIRS = new BlockItem(GCBlocks.DETAILED_BRONZE_DECORATION_STAIRS, new Item.Properties());
-    public static final Item DETAILED_BRONZE_DECORATION_WALL = new BlockItem(GCBlocks.DETAILED_BRONZE_DECORATION_WALL, new Item.Properties());
-
-    public static final Item COPPER_DECORATION = new BlockItem(GCBlocks.COPPER_DECORATION, new Item.Properties());
-    public static final Item COPPER_DECORATION_SLAB = new BlockItem(GCBlocks.COPPER_DECORATION_SLAB, new Item.Properties());
-    public static final Item COPPER_DECORATION_STAIRS = new BlockItem(GCBlocks.COPPER_DECORATION_STAIRS, new Item.Properties());
-    public static final Item COPPER_DECORATION_WALL = new BlockItem(GCBlocks.COPPER_DECORATION_WALL, new Item.Properties());
-    public static final Item DETAILED_COPPER_DECORATION = new BlockItem(GCBlocks.DETAILED_COPPER_DECORATION, new Item.Properties());
-    public static final Item DETAILED_COPPER_DECORATION_SLAB = new BlockItem(GCBlocks.DETAILED_COPPER_DECORATION_SLAB, new Item.Properties());
-    public static final Item DETAILED_COPPER_DECORATION_STAIRS = new BlockItem(GCBlocks.DETAILED_COPPER_DECORATION_STAIRS, new Item.Properties());
-    public static final Item DETAILED_COPPER_DECORATION_WALL = new BlockItem(GCBlocks.DETAILED_COPPER_DECORATION_WALL, new Item.Properties());
-
-    public static final Item IRON_DECORATION = new BlockItem(GCBlocks.IRON_DECORATION, new Item.Properties());
-    public static final Item IRON_DECORATION_SLAB = new BlockItem(GCBlocks.IRON_DECORATION_SLAB, new Item.Properties());
-    public static final Item IRON_DECORATION_STAIRS = new BlockItem(GCBlocks.IRON_DECORATION_STAIRS, new Item.Properties());
-    public static final Item IRON_DECORATION_WALL = new BlockItem(GCBlocks.IRON_DECORATION_WALL, new Item.Properties());
-    public static final Item DETAILED_IRON_DECORATION = new BlockItem(GCBlocks.DETAILED_IRON_DECORATION, new Item.Properties());
-    public static final Item DETAILED_IRON_DECORATION_SLAB = new BlockItem(GCBlocks.DETAILED_IRON_DECORATION_SLAB, new Item.Properties());
-    public static final Item DETAILED_IRON_DECORATION_STAIRS = new BlockItem(GCBlocks.DETAILED_IRON_DECORATION_STAIRS, new Item.Properties());
-    public static final Item DETAILED_IRON_DECORATION_WALL = new BlockItem(GCBlocks.DETAILED_IRON_DECORATION_WALL, new Item.Properties());
-
-    public static final Item METEORIC_IRON_DECORATION = new BlockItem(GCBlocks.METEORIC_IRON_DECORATION, new Item.Properties());
-    public static final Item METEORIC_IRON_DECORATION_SLAB = new BlockItem(GCBlocks.METEORIC_IRON_DECORATION_SLAB, new Item.Properties());
-    public static final Item METEORIC_IRON_DECORATION_STAIRS = new BlockItem(GCBlocks.METEORIC_IRON_DECORATION_STAIRS, new Item.Properties());
-    public static final Item METEORIC_IRON_DECORATION_WALL = new BlockItem(GCBlocks.METEORIC_IRON_DECORATION_WALL, new Item.Properties());
-    public static final Item DETAILED_METEORIC_IRON_DECORATION = new BlockItem(GCBlocks.DETAILED_METEORIC_IRON_DECORATION, new Item.Properties());
-    public static final Item DETAILED_METEORIC_IRON_DECORATION_SLAB = new BlockItem(GCBlocks.DETAILED_METEORIC_IRON_DECORATION_SLAB, new Item.Properties());
-    public static final Item DETAILED_METEORIC_IRON_DECORATION_STAIRS = new BlockItem(GCBlocks.DETAILED_METEORIC_IRON_DECORATION_STAIRS, new Item.Properties());
-    public static final Item DETAILED_METEORIC_IRON_DECORATION_WALL = new BlockItem(GCBlocks.DETAILED_METEORIC_IRON_DECORATION_WALL, new Item.Properties());
-
-    public static final Item STEEL_DECORATION = new BlockItem(GCBlocks.STEEL_DECORATION, new Item.Properties());
-    public static final Item STEEL_DECORATION_SLAB = new BlockItem(GCBlocks.STEEL_DECORATION_SLAB, new Item.Properties());
-    public static final Item STEEL_DECORATION_STAIRS = new BlockItem(GCBlocks.STEEL_DECORATION_STAIRS, new Item.Properties());
-    public static final Item STEEL_DECORATION_WALL = new BlockItem(GCBlocks.STEEL_DECORATION_WALL, new Item.Properties());
-    public static final Item DETAILED_STEEL_DECORATION = new BlockItem(GCBlocks.DETAILED_STEEL_DECORATION, new Item.Properties());
-    public static final Item DETAILED_STEEL_DECORATION_SLAB = new BlockItem(GCBlocks.DETAILED_STEEL_DECORATION_SLAB, new Item.Properties());
-    public static final Item DETAILED_STEEL_DECORATION_STAIRS = new BlockItem(GCBlocks.DETAILED_STEEL_DECORATION_STAIRS, new Item.Properties());
-    public static final Item DETAILED_STEEL_DECORATION_WALL = new BlockItem(GCBlocks.DETAILED_STEEL_DECORATION_WALL, new Item.Properties());
-
-    public static final Item TIN_DECORATION = new BlockItem(GCBlocks.TIN_DECORATION, new Item.Properties());
-    public static final Item TIN_DECORATION_SLAB = new BlockItem(GCBlocks.TIN_DECORATION_SLAB, new Item.Properties());
-    public static final Item TIN_DECORATION_STAIRS = new BlockItem(GCBlocks.TIN_DECORATION_STAIRS, new Item.Properties());
-    public static final Item TIN_DECORATION_WALL = new BlockItem(GCBlocks.TIN_DECORATION_WALL, new Item.Properties());
-    public static final Item DETAILED_TIN_DECORATION = new BlockItem(GCBlocks.DETAILED_TIN_DECORATION, new Item.Properties());
-    public static final Item DETAILED_TIN_DECORATION_SLAB = new BlockItem(GCBlocks.DETAILED_TIN_DECORATION_SLAB, new Item.Properties());
-    public static final Item DETAILED_TIN_DECORATION_STAIRS = new BlockItem(GCBlocks.DETAILED_TIN_DECORATION_STAIRS, new Item.Properties());
-    public static final Item DETAILED_TIN_DECORATION_WALL = new BlockItem(GCBlocks.DETAILED_TIN_DECORATION_WALL, new Item.Properties());
-
-    public static final Item TITANIUM_DECORATION = new BlockItem(GCBlocks.TITANIUM_DECORATION, new Item.Properties());
-    public static final Item TITANIUM_DECORATION_SLAB = new BlockItem(GCBlocks.TITANIUM_DECORATION_SLAB, new Item.Properties());
-    public static final Item TITANIUM_DECORATION_STAIRS = new BlockItem(GCBlocks.TITANIUM_DECORATION_STAIRS, new Item.Properties());
-    public static final Item TITANIUM_DECORATION_WALL = new BlockItem(GCBlocks.TITANIUM_DECORATION_WALL, new Item.Properties());
-    public static final Item DETAILED_TITANIUM_DECORATION = new BlockItem(GCBlocks.DETAILED_TITANIUM_DECORATION, new Item.Properties());
-    public static final Item DETAILED_TITANIUM_DECORATION_SLAB = new BlockItem(GCBlocks.DETAILED_TITANIUM_DECORATION_SLAB, new Item.Properties());
-    public static final Item DETAILED_TITANIUM_DECORATION_STAIRS = new BlockItem(GCBlocks.DETAILED_TITANIUM_DECORATION_STAIRS, new Item.Properties());
-    public static final Item DETAILED_TITANIUM_DECORATION_WALL = new BlockItem(GCBlocks.DETAILED_TITANIUM_DECORATION_WALL, new Item.Properties());
-
-    public static final Item DARK_DECORATION = new BlockItem(GCBlocks.DARK_DECORATION, new Item.Properties());
-    public static final Item DARK_DECORATION_SLAB = new BlockItem(GCBlocks.DARK_DECORATION_SLAB, new Item.Properties());
-    public static final Item DARK_DECORATION_STAIRS = new BlockItem(GCBlocks.DARK_DECORATION_STAIRS, new Item.Properties());
-    public static final Item DARK_DECORATION_WALL = new BlockItem(GCBlocks.DARK_DECORATION_WALL, new Item.Properties());
-    public static final Item DETAILED_DARK_DECORATION = new BlockItem(GCBlocks.DETAILED_DARK_DECORATION, new Item.Properties());
-    public static final Item DETAILED_DARK_DECORATION_SLAB = new BlockItem(GCBlocks.DETAILED_DARK_DECORATION_SLAB, new Item.Properties());
-    public static final Item DETAILED_DARK_DECORATION_STAIRS = new BlockItem(GCBlocks.DETAILED_DARK_DECORATION_STAIRS, new Item.Properties());
-    public static final Item DETAILED_DARK_DECORATION_WALL = new BlockItem(GCBlocks.DETAILED_DARK_DECORATION_WALL, new Item.Properties());
 
     // MOON NATURAL
     public static final Item MOON_TURF = new BlockItem(GCBlocks.MOON_TURF, new Item.Properties());
@@ -252,7 +171,7 @@ public class GCItems {
     public static final Item GALENA_ORE = new BlockItem(GCBlocks.GALENA_ORE, new Item.Properties());
 
     // CHEESE BLOCK
-    public static final Item MOON_CHEESE_BLOCK = new BlockItem(GCBlocks.MOON_CHEESE_BLOCK, new Item.Properties());
+    public static final Item MOON_CHEESE_WHEEL = new BlockItem(GCBlocks.MOON_CHEESE_WHEEL, new Item.Properties());
 
     // COMPACT MINERAL BLOCKS
     public static final Item SILICON_BLOCK = new BlockItem(GCBlocks.SILICON_BLOCK, new Item.Properties());
@@ -271,9 +190,9 @@ public class GCItems {
     // MISC MACHINES
     public static final Item CRYOGENIC_CHAMBER = new BlockItem(GCBlocks.CRYOGENIC_CHAMBER, new Item.Properties());
     public static final Item PLAYER_TRANSPORT_TUBE = new BlockItem(GCBlocks.PLAYER_TRANSPORT_TUBE, new Item.Properties());
-    public static final BlockItem AIR_LOCK_FRAME = new BlockItem(GCBlocks.AIR_LOCK_FRAME, new FabricItemSettings());
-    public static final BlockItem AIR_LOCK_CONTROLLER = new BlockItem(GCBlocks.AIR_LOCK_CONTROLLER, new FabricItemSettings());
-    public static final BlockItem AIR_LOCK_SEAL = new BlockItem(GCBlocks.AIR_LOCK_SEAL, new FabricItemSettings());
+    public static final Item AIR_LOCK_FRAME = new BlockItem(GCBlocks.AIR_LOCK_FRAME, new FabricItemSettings());
+    public static final Item AIR_LOCK_CONTROLLER = new BlockItem(GCBlocks.AIR_LOCK_CONTROLLER, new FabricItemSettings());
+    public static final Item AIR_LOCK_SEAL = new BlockItem(GCBlocks.AIR_LOCK_SEAL, new FabricItemSettings());
 
     // MACHINES
     public static final Item CIRCUIT_FABRICATOR = new BlockItem(GCBlocks.CIRCUIT_FABRICATOR, new Item.Properties());
@@ -385,6 +304,10 @@ public class GCItems {
     public static final Item TIER_2_HEAVY_DUTY_PLATE = ITEMS.register(Constant.Item.TIER_2_HEAVY_DUTY_PLATE, new Item(new Item.Properties()));
     public static final Item TIER_3_HEAVY_DUTY_PLATE = ITEMS.register(Constant.Item.TIER_3_HEAVY_DUTY_PLATE, new Item(new Item.Properties()));
 
+    // THROWABLE METEOR CHUNKS
+    public static final Item THROWABLE_METEOR_CHUNK = new ThrowableMeteorChunkItem(new Item.Properties().stacksTo(16));
+    public static final Item HOT_THROWABLE_METEOR_CHUNK = new HotThrowableMeteorChunkItem(new Item.Properties().stacksTo(16));
+
     // ARMOR
     public static final Item HEAVY_DUTY_HELMET = new ArmorItem(GCArmorMaterial.HEAVY_DUTY, ArmorItem.Type.HELMET, new Item.Properties());
     public static final Item HEAVY_DUTY_CHESTPLATE = new ArmorItem(GCArmorMaterial.HEAVY_DUTY, ArmorItem.Type.CHESTPLATE, new Item.Properties());
@@ -425,6 +348,30 @@ public class GCItems {
 
     public static final Item STANDARD_WRENCH = new StandardWrenchItem(new Item.Properties().durability(256));
 
+    // SMITHING TEMPLATES
+    public static final Item TITANTIUM_UPGRADE_SMITHING_TEMPLATE = new SmithingTemplateItem(
+            Component.translatable(Translations.Misc.UPGRADE_TITANIUM_APPLIES_TO),
+            Component.translatable(Translations.Misc.UPGRADE_TITANIUM_INGREDIENTS),
+            Component.translatable(Translations.Misc.UPGRADE_TITANIUM_DESCRIPTION),
+            Component.translatable(Translations.Misc.UPGRADE_TITANIUM_BASE_SLOT_DESCRIPTION),
+            Component.translatable(Translations.Misc.UPGRADE_TITANIUM_ADDITIONS_SLOT_DESCRIPTON),
+            List.of(new ResourceLocation("item/empty_armor_slot_helmet"),
+                    new ResourceLocation("item/empty_armor_slot_chestplate"),
+                    new ResourceLocation("item/empty_armor_slot_leggings"),
+                    new ResourceLocation("item/empty_armor_slot_boots"),
+                    new ResourceLocation("item/empty_slot_hoe"),
+                    new ResourceLocation("item/empty_slot_axe"),
+                    new ResourceLocation("item/empty_slot_sword"),
+                    new ResourceLocation("item/empty_slot_shovel"),
+                    new ResourceLocation("item/empty_slot_pickaxe")),
+            List.of(new ResourceLocation("item/empty_slot_ingot"))
+    );
+    // 		this.appliesTo = component;
+    //		this.ingredients = component2;
+    //		this.upgradeDescription = component3;
+    //		this.baseSlotDescription = component4;
+    //		this.additionsSlotDescription = component5;
+
     // BATTERIES
     public static final Item BATTERY = new BatteryItem(new Item.Properties(), 15000, 500);
     public static final Item INFINITE_BATTERY = new InfiniteBatteryItem(new Item.Properties().rarity(Rarity.EPIC));
@@ -432,24 +379,10 @@ public class GCItems {
     //FLUID BUCKETS
     public static final Item CRUDE_OIL_BUCKET = new BucketItem(GCFluids.CRUDE_OIL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1));
     public static final Item FUEL_BUCKET = new BucketItem(GCFluids.FUEL, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1));
+    public static final Item SULFURIC_ACID_BUCKET = new BucketItem(GCFluids.SULFURIC_ACID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1));
 
     //GALACTICRAFT INVENTORY
-    public static final Item PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item ORANGE_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item MAGENTA_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item LIGHT_BLUE_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item YELLOW_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item LIME_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item PINK_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item GRAY_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item LIGHT_GRAY_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item CYAN_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item PURPLE_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item BLUE_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item BROWN_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item GREEN_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item RED_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
-    public static final Item BLACK_PARACHUTE = new Item(new Item.Properties().stacksTo(1));
+    public static final GCRegistry.ColorSet<ParachuteItem> PARACHUTE = ITEMS.registerColored(Constant.Item.PARACHUTE, color -> new ParachuteItem(color, new Item.Properties().stacksTo(1)));
 
     public static final Item OXYGEN_MASK = new OxygenMaskItem(new Item.Properties());
     public static final Item OXYGEN_GEAR = new OxygenGearItem(new Item.Properties());
@@ -472,7 +405,7 @@ public class GCItems {
     // ROCKET PIECES
     public static final Item NOSE_CONE = ITEMS.register(Constant.Item.NOSE_CONE, new Item(new Item.Properties()));
     public static final Item HEAVY_NOSE_CONE = ITEMS.register(Constant.Item.HEAVY_NOSE_CONE, new Item(new Item.Properties()));
-    public static final Item ROCKET_FINS = ITEMS.register(Constant.Item.ROCKET_FINS, new Item(new Item.Properties()));
+    public static final Item ROCKET_FIN = ITEMS.register(Constant.Item.ROCKET_FIN, new Item(new Item.Properties()));
     public static final Item ROCKET_ENGINE = ITEMS.register(Constant.Item.ROCKET_ENGINE, new Item(new Item.Properties()));
 
     // SCHEMATICS
@@ -491,83 +424,6 @@ public class GCItems {
 
     public static void register() {
         // === START BLOCKS ===
-
-        // DECORATION BLOCKS
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_ALUMINUM_DECORATION_SLAB), DETAILED_ALUMINUM_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_ALUMINUM_DECORATION_STAIRS), DETAILED_ALUMINUM_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_ALUMINUM_DECORATION_WALL), DETAILED_ALUMINUM_DECORATION_WALL);
-
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.BRONZE_DECORATION), BRONZE_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.BRONZE_DECORATION_SLAB), BRONZE_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.BRONZE_DECORATION_STAIRS), BRONZE_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.BRONZE_DECORATION_WALL), BRONZE_DECORATION_WALL);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_BRONZE_DECORATION), DETAILED_BRONZE_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_BRONZE_DECORATION_SLAB), DETAILED_BRONZE_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_BRONZE_DECORATION_STAIRS), DETAILED_BRONZE_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_BRONZE_DECORATION_WALL), DETAILED_BRONZE_DECORATION_WALL);
-
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.COPPER_DECORATION), COPPER_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.COPPER_DECORATION_SLAB), COPPER_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.COPPER_DECORATION_STAIRS), COPPER_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.COPPER_DECORATION_WALL), COPPER_DECORATION_WALL);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_COPPER_DECORATION), DETAILED_COPPER_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_COPPER_DECORATION_SLAB), DETAILED_COPPER_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_COPPER_DECORATION_STAIRS), DETAILED_COPPER_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_COPPER_DECORATION_WALL), DETAILED_COPPER_DECORATION_WALL);
-
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.IRON_DECORATION), IRON_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.IRON_DECORATION_SLAB), IRON_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.IRON_DECORATION_STAIRS), IRON_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.IRON_DECORATION_WALL), IRON_DECORATION_WALL);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_IRON_DECORATION), DETAILED_IRON_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_IRON_DECORATION_SLAB), DETAILED_IRON_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_IRON_DECORATION_STAIRS), DETAILED_IRON_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_IRON_DECORATION_WALL), DETAILED_IRON_DECORATION_WALL);
-
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.METEORIC_IRON_DECORATION), METEORIC_IRON_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.METEORIC_IRON_DECORATION_SLAB), METEORIC_IRON_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.METEORIC_IRON_DECORATION_STAIRS), METEORIC_IRON_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.METEORIC_IRON_DECORATION_WALL), METEORIC_IRON_DECORATION_WALL);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_METEORIC_IRON_DECORATION), DETAILED_METEORIC_IRON_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_METEORIC_IRON_DECORATION_SLAB), DETAILED_METEORIC_IRON_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_METEORIC_IRON_DECORATION_STAIRS), DETAILED_METEORIC_IRON_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_METEORIC_IRON_DECORATION_WALL), DETAILED_METEORIC_IRON_DECORATION_WALL);
-
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.STEEL_DECORATION), STEEL_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.STEEL_DECORATION_SLAB), STEEL_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.STEEL_DECORATION_STAIRS), STEEL_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.STEEL_DECORATION_WALL), STEEL_DECORATION_WALL);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_STEEL_DECORATION), DETAILED_STEEL_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_STEEL_DECORATION_SLAB), DETAILED_STEEL_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_STEEL_DECORATION_STAIRS), DETAILED_STEEL_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_STEEL_DECORATION_WALL), DETAILED_STEEL_DECORATION_WALL);
-
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.TIN_DECORATION), TIN_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.TIN_DECORATION_SLAB), TIN_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.TIN_DECORATION_STAIRS), TIN_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.TIN_DECORATION_WALL), TIN_DECORATION_WALL);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_TIN_DECORATION), DETAILED_TIN_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_TIN_DECORATION_SLAB), DETAILED_TIN_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_TIN_DECORATION_STAIRS), DETAILED_TIN_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_TIN_DECORATION_WALL), DETAILED_TIN_DECORATION_WALL);
-
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.TITANIUM_DECORATION), TITANIUM_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.TITANIUM_DECORATION_SLAB), TITANIUM_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.TITANIUM_DECORATION_STAIRS), TITANIUM_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.TITANIUM_DECORATION_WALL), TITANIUM_DECORATION_WALL);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_TITANIUM_DECORATION), DETAILED_TITANIUM_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_TITANIUM_DECORATION_SLAB), DETAILED_TITANIUM_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_TITANIUM_DECORATION_STAIRS), DETAILED_TITANIUM_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_TITANIUM_DECORATION_WALL), DETAILED_TITANIUM_DECORATION_WALL);
-
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DARK_DECORATION), DARK_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DARK_DECORATION_SLAB), DARK_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DARK_DECORATION_STAIRS), DARK_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DARK_DECORATION_WALL), DARK_DECORATION_WALL);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_DARK_DECORATION), DETAILED_DARK_DECORATION);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_DARK_DECORATION_SLAB), DETAILED_DARK_DECORATION_SLAB);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_DARK_DECORATION_STAIRS), DETAILED_DARK_DECORATION_STAIRS);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.DETAILED_DARK_DECORATION_WALL), DETAILED_DARK_DECORATION_WALL);
 
         // MOON NATURAL
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.MOON_TURF), MOON_TURF);
@@ -685,7 +541,7 @@ public class GCItems {
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.GALENA_ORE), GALENA_ORE);
 
         // CHEESE BLOCK
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.MOON_CHEESE_BLOCK), MOON_CHEESE_BLOCK);
+        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.MOON_CHEESE_WHEEL), MOON_CHEESE_WHEEL);
 
         // COMPACT MINERAL BLOCKS
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Block.SILICON_BLOCK), SILICON_BLOCK);
@@ -804,6 +660,10 @@ public class GCItems {
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.CANNED_DEHYDRATED_POTATO), CANNED_DEHYDRATED_POTATO);
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.CANNED_BEEF), CANNED_BEEF);
 
+        // THROWABLE METEOR CHUNKS
+        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.THROWABLE_METEOR_CHUNK), THROWABLE_METEOR_CHUNK);
+        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.HOT_THROWABLE_METEOR_CHUNK), HOT_THROWABLE_METEOR_CHUNK);
+
         // ARMOR
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.HEAVY_DUTY_HELMET), HEAVY_DUTY_HELMET);
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.HEAVY_DUTY_CHESTPLATE), HEAVY_DUTY_CHESTPLATE);
@@ -844,6 +704,9 @@ public class GCItems {
 
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.STANDARD_WRENCH), STANDARD_WRENCH);
 
+        // SMITHING TEMPLATES
+        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.TITANTIUM_UPGRADE_SMITHING_TEMPLATE), TITANTIUM_UPGRADE_SMITHING_TEMPLATE);
+
         // BATTERIES
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.BATTERY), BATTERY);
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.INFINITE_BATTERY), INFINITE_BATTERY);
@@ -851,25 +714,9 @@ public class GCItems {
         //FLUID BUCKETS
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.CRUDE_OIL_BUCKET), CRUDE_OIL_BUCKET);
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.FUEL_BUCKET), FUEL_BUCKET);
+        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.SULFURIC_ACID_BUCKET), SULFURIC_ACID_BUCKET);
 
         //GALACTICRAFT INVENTORY
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.PARACHUTE), PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.ORANGE_PARACHUTE), ORANGE_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.MAGENTA_PARACHUTE), MAGENTA_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.LIGHT_BLUE_PARACHUTE), LIGHT_BLUE_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.YELLOW_PARACHUTE), YELLOW_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.LIME_PARACHUTE), LIME_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.PINK_PARACHUTE), PINK_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.GRAY_PARACHUTE), GRAY_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.LIGHT_GRAY_PARACHUTE), LIGHT_GRAY_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.CYAN_PARACHUTE), CYAN_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.PURPLE_PARACHUTE), PURPLE_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.BLUE_PARACHUTE), BLUE_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.BROWN_PARACHUTE), BROWN_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.GREEN_PARACHUTE), GREEN_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.RED_PARACHUTE), RED_PARACHUTE);
-        Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.BLACK_PARACHUTE), BLACK_PARACHUTE);
-
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.OXYGEN_MASK), OXYGEN_MASK);
         Registry.register(BuiltInRegistries.ITEM, Constant.id(Constant.Item.OXYGEN_GEAR), OXYGEN_GEAR);
 
@@ -906,5 +753,6 @@ public class GCItems {
 
         DispenserBlock.registerBehavior(FUEL_BUCKET, DispenserBlock.DISPENSER_REGISTRY.get(Items.WATER_BUCKET));
         DispenserBlock.registerBehavior(CRUDE_OIL_BUCKET, DispenserBlock.DISPENSER_REGISTRY.get(Items.WATER_BUCKET));
+        DispenserBlock.registerBehavior(SULFURIC_ACID_BUCKET, DispenserBlock.DISPENSER_REGISTRY.get(Items.WATER_BUCKET));
     }
 }

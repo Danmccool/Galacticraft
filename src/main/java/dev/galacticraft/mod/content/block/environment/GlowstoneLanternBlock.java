@@ -23,6 +23,7 @@
 package dev.galacticraft.mod.content.block.environment;
 
 import dev.galacticraft.mod.Constant;
+import dev.galacticraft.mod.util.Translations;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -32,9 +33,6 @@ import net.minecraft.world.level.block.LanternBlock;
 
 import java.util.List;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class GlowstoneLanternBlock extends LanternBlock {
     public GlowstoneLanternBlock(Properties settings) {
         super(settings);
@@ -43,9 +41,9 @@ public class GlowstoneLanternBlock extends LanternBlock {
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter blockView, List<Component> list, TooltipFlag tooltipContext) {
         if (Screen.hasShiftDown()) {
-            list.add(Component.translatable("tooltip.galacticraft.glowstone_lantern").setStyle(Constant.Text.Color.GRAY_STYLE));
+            list.add(Component.translatable(Translations.Tooltip.GLOWSTONE_LANTERN).setStyle(Constant.Text.Color.GRAY_STYLE));
         } else {
-            list.add(Component.translatable("tooltip.galacticraft.press_shift").setStyle(Constant.Text.Color.GRAY_STYLE));
+            list.add(Component.translatable(Translations.Tooltip.PRESS_SHIFT).setStyle(Constant.Text.Color.GRAY_STYLE));
         }
     }
 }

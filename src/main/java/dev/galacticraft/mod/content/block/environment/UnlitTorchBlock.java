@@ -22,6 +22,7 @@
 
 package dev.galacticraft.mod.content.block.environment;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,12 +40,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class UnlitTorchBlock extends TorchBlock {
+    public static final MapCodec<UnlitTorchBlock> CODEC = simpleCodec(UnlitTorchBlock::new);
+
     public UnlitTorchBlock(Properties properties) {
-        super(properties, null);
+        super(null, properties);
     }
 
     @Override
@@ -69,5 +69,10 @@ public class UnlitTorchBlock extends TorchBlock {
     @Override
     public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource random) {
         // stop particles from spawning
+    }
+
+    @Override
+    public MapCodec<? extends UnlitTorchBlock> codec() {
+        return CODEC;
     }
 }

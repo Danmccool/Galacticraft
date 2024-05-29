@@ -45,9 +45,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class RefineryBlockEntity extends MachineBlockEntity { //fixme
     public static final int CHARGE_SLOT = 0;
     public static final int OIL_INPUT_SLOT = 1;
@@ -79,10 +76,10 @@ public class RefineryBlockEntity extends MachineBlockEntity { //fixme
         if (fuelTank.isFull()) return GCMachineStatuses.FUEL_TANK_FULL;
         profiler.push("transaction");
         try {
-            if (this.energyStorage().canExtract(Galacticraft.CONFIG_MANAGER.get().refineryEnergyConsumptionRate())) {
+            if (this.energyStorage().canExtract(Galacticraft.CONFIG.refineryEnergyConsumptionRate())) {
                 long space = fuelTank.tryInsert(GCFluids.FUEL, FluidConstants.BUCKET / 20 / 5);
                 if (space > 0) {
-                    this.energyStorage().extract(Galacticraft.CONFIG_MANAGER.get().refineryEnergyConsumptionRate());
+                    this.energyStorage().extract(Galacticraft.CONFIG.refineryEnergyConsumptionRate());
                     fuelTank.insert(GCFluids.FUEL, oilTank.extract(GCFluids.CRUDE_OIL, space));
                 }
                 return MachineStatuses.ACTIVE;

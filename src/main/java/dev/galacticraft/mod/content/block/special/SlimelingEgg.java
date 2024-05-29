@@ -3,6 +3,9 @@ package dev.galacticraft.mod.content.block.special;
 
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.galacticraft.mod.content.GCEntityTypes;
 import dev.galacticraft.mod.content.block.entity.SlimelingEggBlockEntity;
 import dev.galacticraft.mod.content.item.GCItems;
@@ -20,6 +23,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ambient.Bat;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -41,6 +45,10 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SlimelingEgg extends BaseEntityBlock implements SimpleWaterloggedBlock {
+    public static final MapCodec<SlimelingEgg> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            propertiesCodec(),
+            EggColor.CODEC.fieldOf("color").forGetter(slimelingEgg -> slimelingEgg.eggColor)
+    ).apply(instance, SlimelingEgg::new));
     public static final IntegerProperty HATCH = BlockStateProperties.HATCH;
     public static final BooleanProperty CRACKED = BooleanProperty.create("cracked");
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -98,6 +106,11 @@ public class SlimelingEgg extends BaseEntityBlock implements SimpleWaterloggedBl
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -215,6 +228,8 @@ public class SlimelingEgg extends BaseEntityBlock implements SimpleWaterloggedBl
         RED("red"),
         BLUE("blue"),
         YELLOW("yellow");
+
+        public static final Codec<EggColor> CODEC = StringRepresentable.fromEnum(EggColor::values);
 
         private final String name;
 

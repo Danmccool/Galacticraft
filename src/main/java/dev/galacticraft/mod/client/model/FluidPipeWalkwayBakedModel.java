@@ -58,9 +58,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 @Environment(EnvType.CLIENT)
 public class FluidPipeWalkwayBakedModel implements BakedModel {
     private static FluidPipeWalkwayBakedModel instance = null;
@@ -160,7 +157,6 @@ public class FluidPipeWalkwayBakedModel implements BakedModel {
             context.pushTransform(WalkwayBakedModel.Transform.INSTANCE);
             this.coloredWalkway.get(pipe.getColor()).emitBlockQuads(getter, blockState, blockPos, randomSupplier, context);
             context.popTransform();
-            pipe.calculateConnections();
 
             PipeBakedModel.ColorTransform.INSTANCE.setSprite(this.colorSpriteMap.get(pipe.getColor()));
             context.pushTransform(PipeBakedModel.ColorTransform.INSTANCE);

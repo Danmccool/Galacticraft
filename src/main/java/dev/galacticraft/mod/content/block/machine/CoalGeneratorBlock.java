@@ -23,6 +23,7 @@
 package dev.galacticraft.mod.content.block.machine;
 
 import dev.galacticraft.machinelib.api.block.MachineBlock;
+import dev.galacticraft.mod.Constant;
 import dev.galacticraft.mod.content.block.entity.machine.CoalGeneratorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -34,12 +35,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class CoalGeneratorBlock extends MachineBlock<CoalGeneratorBlockEntity> {
     public CoalGeneratorBlock(Properties settings) {
-        super(settings, CoalGeneratorBlockEntity::new);
+        super(settings, Constant.id(Constant.Block.COAL_GENERATOR));
     }
 
     @Override

@@ -22,7 +22,7 @@
 
 package dev.galacticraft.mod.content.block.environment;
 
-import dev.galacticraft.mod.util.ColorUtil;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -30,6 +30,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -57,11 +58,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
-public class FallenMeteorBlock extends FallingBlock implements SimpleWaterloggedBlock
-{
+public class FallenMeteorBlock extends FallingBlock implements SimpleWaterloggedBlock {
+    public static final MapCodec<FallenMeteorBlock> CODEC = simpleCodec(FallenMeteorBlock::new);
     private static final VoxelShape SHAPE = box(3, 1, 3, 13, 11, 13);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final IntegerProperty HEAT = IntegerProperty.create("heat", 0, 5);
@@ -69,6 +67,11 @@ public class FallenMeteorBlock extends FallingBlock implements SimpleWaterlogged
     public FallenMeteorBlock(BlockBehaviour.Properties settings) {
         super(settings);
         this.registerDefaultState(this.getStateDefinition().any().setValue(WATERLOGGED, false).setValue(HEAT, 0));
+    }
+
+    @Override
+    protected MapCodec<FallenMeteorBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -159,11 +162,11 @@ public class FallenMeteorBlock extends FallingBlock implements SimpleWaterlogged
 
     public static int colorMultiplier(BlockState state, BlockAndTintGetter blockView, BlockPos pos) {
         return blockView != null && pos != null ? switch (state.getValue(HEAT)) {
-            case 1 -> ColorUtil.rgb(255, 255, 218);
-            case 2 -> ColorUtil.rgb(255, 228, 178);
-            case 3 -> ColorUtil.rgb(255, 187, 137);
-            case 4 -> ColorUtil.rgb(238, 148, 98);
-            case 5 -> ColorUtil.rgb(198, 108, 58);
+            case 1 -> FastColor.ARGB32.color(255, 255, 255, 218);
+            case 2 -> FastColor.ARGB32.color(255, 255, 228, 178);
+            case 3 -> FastColor.ARGB32.color(255, 255, 187, 137);
+            case 4 -> FastColor.ARGB32.color(255, 238, 148, 98);
+            case 5 -> FastColor.ARGB32.color(255, 198, 108, 58);
             default -> 16777215;
         } : 16777215;
     }

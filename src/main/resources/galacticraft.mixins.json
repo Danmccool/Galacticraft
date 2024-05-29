@@ -14,15 +14,18 @@
     "EntityMixin",
     "FlowingFluidMixin",
     "GiveCommandMixin",
+    "ItemEntityMixin",
     "ItemStackMixin",
     "LanternBlockMixin",
     "LevelMixin",
+    "LivingEntityMixin",
     "ModelProviderMixin",
     "MultiNoiseBiomeSourceParameterListPresetAccessor",
     "PlayerMixin",
     "ServerLevelMixin",
     "ServerPlayerMixin",
-    "TorchBlockMixin"
+    "TorchBlockMixin",
+    "client.ClientPacketListenerMixin"
   ],
   "client": [
     "client.AbstractClientPlayerMixin",
@@ -30,12 +33,12 @@
     "client.AnimalModelAgeableListModel",
     "client.CameraMixin",
     "client.ClientLevelMixin",
-    "client.ClientPacketListenerMixin",
     "client.FogRendererMixin",
     "client.HumanoidModelMixin",
     "client.LevelRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.LocalPlayerMixin",
+    "client.MinecraftMixin",
     "client.PauseMenuScreenMixin",
     "client.VillagerModelMixin",
     "client.VillagerRendererMixin"

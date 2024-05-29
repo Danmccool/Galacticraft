@@ -9,8 +9,9 @@
       "temperature": 23.0
     },
     "celestial_handler": "galacticraft:default",
+    "day_length": 192000,
     "day_temperature": 105,
-    "description": "planet.galacticraft.moon.desc",
+    "description": "planet.galacticraft.moon.description",
     "display": {
       "type": "galacticraft:icon",
       "config": {
@@ -24,16 +25,20 @@
     },
     "galaxy": "galacticraft:milky_way",
     "gravity": 0.166,
-    "name": "planet.galacticraft.moon.name",
+    "name": "planet.galacticraft.moon",
     "night_temperature": -180,
     "position": {
       "type": "galacticraft:orbital",
       "config": {
         "distance": 20.0,
-        "orbit_time": 655200.0,
+        "orbit_time": 100.0,
         "phase_shift": 0.2667,
         "planet": false
       }
+    },
+    "ring": {
+      "type": "galacticraft:default",
+      "config": {}
     },
     "teleporter": "galacticraft:lander",
     "world": "galacticraft:moon"

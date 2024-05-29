@@ -55,9 +55,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 @Environment(EnvType.CLIENT)
 public class WireWalkwayBakedModel implements BakedModel {
     private static WireWalkwayBakedModel instance = null;
@@ -194,7 +191,6 @@ public class WireWalkwayBakedModel implements BakedModel {
             context.pushTransform(WalkwayBakedModel.Transform.INSTANCE);
             this.walkway.emitBlockQuads(getter, blockState, blockPos, randomSupplier, context);
             context.popTransform();
-            wire.calculateConnections();
 
             this.emitBlockQuadsDirection(emitter, connections, this.down, this.smallDown, Direction.DOWN);
             this.emitBlockQuadsDirection(emitter, connections, this.up, this.smallUp, Direction.UP);

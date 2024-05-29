@@ -34,16 +34,15 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class GCTags {
     public static final TagKey<Fluid> OIL = TagKey.create(Registries.FLUID, new ResourceLocation(Constant.COMMON_NAMESPACE, "oil"));
     public static final TagKey<Fluid> FUEL = TagKey.create(Registries.FLUID, new ResourceLocation(Constant.COMMON_NAMESPACE, "fuel"));
+    public static final TagKey<Fluid> SULFURIC_ACID = TagKey.create(Registries.FLUID, new ResourceLocation(Constant.COMMON_NAMESPACE, "sulfuric_acid"));
     public static final TagKey<Fluid> LIQUID_OXYGEN = TagKey.create(Registries.FLUID, new ResourceLocation(Constant.COMMON_NAMESPACE, "oxygen"));
     public static final TagKey<Fluid> OXYGEN = TagKey.create(Registries.FLUID, Constant.id("oxygen"));
 
     public static final TagKey<Block> INFINIBURN_MOON = TagKey.create(Registries.BLOCK, Constant.id("infiniburn_moon"));
+    public static final TagKey<Block> INFINIBURN_VENUS = TagKey.create(Registries.BLOCK, Constant.id("infiniburn_venus"));
     public static final TagKey<Block> BASE_STONE_MOON = TagKey.create(Registries.BLOCK, Constant.id("base_stone_moon"));
     public static final TagKey<Block> MOON_CARVER_REPLACEABLES = TagKey.create(Registries.BLOCK, Constant.id("moon_carver_replaceables"));
     public static final TagKey<Block> MOON_CRATER_CARVER_REPLACEABLES = TagKey.create(Registries.BLOCK, Constant.id("moon_crater_carver_replaceables"));
@@ -53,10 +52,12 @@ public class GCTags {
     public static final TagKey<Block> FOOTPRINTS = TagKey.create(Registries.BLOCK, Constant.id("footprints"));
 
     public static final TagKey<Biome> MOON = TagKey.create(Registries.BIOME, Constant.id("moon"));
+    public static final TagKey<Biome> VENUS = TagKey.create(Registries.BIOME, Constant.id("venus"));
 
     public static final TagKey<Biome> MOON_PILLAGER_BASE_HAS_STRUCTURE = TagKey.create(Registries.BIOME, Constant.id("has_structure/moon_pillager_base"));
     public static final TagKey<Biome> MOON_VILLAGE_HIGHLANDS_HAS_STRUCTURE = TagKey.create(Registries.BIOME, Constant.id("has_structure/moon_village_highlands"));
     public static final TagKey<Biome> MOON_RUINS_HAS_STRUCTURE = TagKey.create(Registries.BIOME, Constant.id("has_structure/moon_ruins"));
+    public static final TagKey<Biome> MOON_BOSS_HAS_STRUCTURE = TagKey.create(Registries.BIOME, Constant.id("has_structure/moon_boss"));
 
     public static final TagKey<Item> ALUMINUM_INGOTS = commonTag("aluminum_ingots");
     public static final TagKey<Item> RAW_ALUMINUM_ORES = commonTag("raw_aluminum_ores");
@@ -75,6 +76,7 @@ public class GCTags {
     public static final TagKey<Structure> MOON_RUINS = TagKey.create(Registries.STRUCTURE, Constant.id("moon_ruins"));
 
     public static final TagKey<DimensionType> FOOTPRINTS_DIMENSIONS = TagKey.create(Registries.DIMENSION_TYPE, Constant.id("footprints"));
+    public static final TagKey<DimensionType> SPACE = TagKey.create(Registries.DIMENSION_TYPE, Constant.id("space"));
 
     public static final TagKey<EntityType<?>> HAS_FOOTPRINTS = TagKey.create(Registries.ENTITY_TYPE, Constant.id("has_footprints"));
 

@@ -23,6 +23,7 @@
 package dev.galacticraft.mod.content.block.entity.machine;
 
 import dev.galacticraft.machinelib.api.block.entity.BasicRecipeMachineBlockEntity;
+import dev.galacticraft.machinelib.api.compat.vanilla.RecipeTestContainer;
 import dev.galacticraft.machinelib.api.machine.MachineStatus;
 import dev.galacticraft.machinelib.api.machine.MachineStatuses;
 import dev.galacticraft.machinelib.api.menu.RecipeMachineMenu;
@@ -37,14 +38,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.crafting.BlastingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class ElectricArcFurnaceBlockEntity extends BasicRecipeMachineBlockEntity<Container, BlastingRecipe> {
     public static final int CHARGE_SLOT = 0;
     public static final int INPUT_SLOT = 1;
@@ -62,23 +61,23 @@ public class ElectricArcFurnaceBlockEntity extends BasicRecipeMachineBlockEntity
     }
 
     @Override
-    protected @NotNull MachineStatus workingStatus(BlastingRecipe recipe) {
+    protected @NotNull MachineStatus workingStatus(RecipeHolder<BlastingRecipe> recipe) {
         return MachineStatuses.ACTIVE;
     }
 
     @Override
     protected @Nullable MachineStatus hasResourcesToWork() {
-        return this.energyStorage().canExtract(Galacticraft.CONFIG_MANAGER.get().electricArcFurnaceEnergyConsumptionRate()) ? null : MachineStatuses.NOT_ENOUGH_ENERGY;
+        return this.energyStorage().canExtract(Galacticraft.CONFIG.electricArcFurnaceEnergyConsumptionRate()) ? null : MachineStatuses.NOT_ENOUGH_ENERGY;
     }
 
     @Override
     protected void extractResourcesToWork() {
-        this.energyStorage().extract(Galacticraft.CONFIG_MANAGER.get().electricArcFurnaceEnergyConsumptionRate());
+        this.energyStorage().extract(Galacticraft.CONFIG.electricArcFurnaceEnergyConsumptionRate());
     }
 
     @Override
-    public int getProcessingTime(@NotNull BlastingRecipe recipe) {
-        return (int) (recipe.getCookingTime() * 0.9);
+    public int getProcessingTime(@NotNull RecipeHolder<BlastingRecipe> recipe) {
+        return (int) (recipe.value().getCookingTime() * 0.9);
     }
 
     @Nullable
@@ -92,5 +91,10 @@ public class ElectricArcFurnaceBlockEntity extends BasicRecipeMachineBlockEntity
             );
         }
         return null;
+    }
+
+    @Override
+    protected Container createCraftingInv() {
+        return RecipeTestContainer.create(this.itemStorage(), this.inputSlots, this.inputSlotsLen);
     }
 }

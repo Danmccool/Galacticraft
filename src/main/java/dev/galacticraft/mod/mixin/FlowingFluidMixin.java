@@ -32,9 +32,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 @Mixin(FlowingFluid.class)
 public abstract class FlowingFluidMixin {
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", ordinal = 1))
@@ -51,7 +48,7 @@ public abstract class FlowingFluidMixin {
     private boolean onScheduledTickDrain_gc(Level level, BlockPos blockPos, BlockState blockState, int flags) {
         var blockState1 = level.getBlockState(blockPos);
         if (blockState1.getBlock() instanceof FluidLoggable drainable) {
-            drainable.pickupBlock(level, blockPos, blockState1);
+            drainable.pickupBlock(null, level, blockPos, blockState1);
             level.setBlock(blockPos, blockState1.setValue(FluidLoggable.FLUID, Constant.Misc.EMPTY).setValue(FlowingFluid.LEVEL, 1).setValue(FlowingFluid.FALLING, false), 3);
             return true;
         }

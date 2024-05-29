@@ -52,9 +52,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 @Environment(EnvType.CLIENT)
 public class WireBakedModel implements BakedModel {
     private static WireBakedModel instance = null;
@@ -115,7 +112,6 @@ public class WireBakedModel implements BakedModel {
         var emitter = context.getEmitter();
 
         if (getter.getBlockEntity(blockPos) instanceof WireBlockEntity wire) {
-            wire.calculateConnections();
             this.emitBlockQuadsDirection(emitter, wire.getConnections(), this.down, Direction.DOWN);
             this.emitBlockQuadsDirection(emitter, wire.getConnections(), this.up, Direction.UP);
             this.emitBlockQuadsDirection(emitter, wire.getConnections(), this.north, Direction.NORTH);

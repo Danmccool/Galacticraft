@@ -29,8 +29,6 @@ import dev.galacticraft.mod.content.block.entity.networked.WireBlockEntity;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -42,11 +40,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-import team.reborn.energy.api.EnergyStorage;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public abstract class WireBlock extends Block implements EntityBlock {
     public WireBlock(Properties settings) {
         super(settings.pushReaction(PushReaction.BLOCK));
@@ -55,7 +49,7 @@ public abstract class WireBlock extends Block implements EntityBlock {
     @Override
     @Deprecated
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!world.isClientSide() && Galacticraft.CONFIG_MANAGER.get().isDebugLogEnabled() && FabricLoader.getInstance().isDevelopmentEnvironment()) {
+        if (!world.isClientSide() && Galacticraft.CONFIG.isDebugLogEnabled() && FabricLoader.getInstance().isDevelopmentEnvironment()) {
             BlockEntity entity = world.getBlockEntity(pos);
             if (entity instanceof Wire wire) {
                 Constant.LOGGER.info("Network: {}", wire.getNetwork());
@@ -65,34 +59,18 @@ public abstract class WireBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos neighborPos, boolean notify) {
-        super.neighborChanged(state, world, pos, block, neighborPos, notify);
-        if (!world.isClientSide()) {
-            final BlockEntity blockEntity = world.getBlockEntity(pos);
-            Wire wire = (Wire) blockEntity;
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos neighborPos, boolean notify) {
+        super.neighborChanged(state, level, pos, block, neighborPos, notify);
+        if (!level.isClientSide) {
+            var wire = (Wire) level.getBlockEntity(pos);
             assert wire != null;
-            final BlockEntity blockEntityAdj = world.getBlockEntity(neighborPos);
-            BlockPos delta = neighborPos.subtract(pos);
-            if (wire.canConnect(Direction.fromDelta(delta.getX(), delta.getY(), delta.getZ()))) {
-                if (blockEntityAdj instanceof Wire wire1) {
-                    if (wire1.canConnect(Direction.fromDelta(delta.getX(), delta.getY(), delta.getZ()).getOpposite())) {
-                        wire.getOrCreateNetwork().addWire(neighborPos, wire1);
-                    }
-                } else {
-                    if (EnergyStorage.SIDED.find(world, neighborPos, Direction.fromDelta(delta.getX(), delta.getY(), delta.getZ()).getOpposite()) != null) {
-                        wire.getOrCreateNetwork().updateConnection(pos, neighborPos);
-                    } else if (wire.getNetwork() != null) {
-                        wire.getNetwork().updateConnection(pos, neighborPos);
-                    }
-                }
+            Direction direction = Direction.fromDelta(neighborPos.getX() - pos.getX(), neighborPos.getY() - pos.getY(), neighborPos.getZ() - pos.getZ());
+            assert direction != null;
+
+            if (wire.canConnect(direction)) {
+                wire.updateConnection(state, pos, neighborPos, direction);
             }
         }
-    }
-
-    @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        super.onPlace(state, level, pos, oldState, movedByPiston);
-        ((WireBlockEntity) level.getBlockEntity(pos)).getOrCreateNetwork();
     }
 
     @Nullable

@@ -29,7 +29,6 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructureSets;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
@@ -41,14 +40,19 @@ import java.util.Optional;
 
 public class GCStructureSets {
     public static final class Moon {
-        public static final ResourceKey<StructureSet> PILLAGER_BASE = ResourceKey.create(Registries.STRUCTURE_SET, new ResourceLocation(Constant.MOD_ID, "moon_pillager_bases"));
-        public static final ResourceKey<StructureSet> RUINS = ResourceKey.create(Registries.STRUCTURE_SET, new ResourceLocation(Constant.MOD_ID, "moon_ruins"));
+        public static final ResourceKey<StructureSet> PILLAGER_BASE = ResourceKey.create(Registries.STRUCTURE_SET, Constant.id("moon_pillager_bases"));
+        public static final ResourceKey<StructureSet> RUINS = ResourceKey.create(Registries.STRUCTURE_SET, Constant.id("moon_ruins"));
+        public static final ResourceKey<StructureSet> BOSS = ResourceKey.create(Registries.STRUCTURE_SET, Constant.id("moon_boss"));
     }
 
     public static void bootstrapRegistries(BootstapContext<StructureSet> context) {
         HolderGetter<Structure> structureLookup = context.lookup(Registries.STRUCTURE);
         HolderGetter<StructureSet> structureSetLookup = context.lookup(Registries.STRUCTURE_SET);
 
+        context.register(Moon.BOSS, new StructureSet(
+                structureLookup.getOrThrow(GCStructures.Moon.BOSS),
+                new RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 52532672)
+        ));
         context.register(Moon.RUINS,  new StructureSet(
                 structureLookup.getOrThrow(GCStructures.Moon.RUINS),
                 new RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 38245864)

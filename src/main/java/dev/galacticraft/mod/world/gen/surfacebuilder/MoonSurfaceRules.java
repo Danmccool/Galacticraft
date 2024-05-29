@@ -30,7 +30,6 @@ import dev.galacticraft.mod.world.gen.GCNoiseData;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -52,7 +51,7 @@ public class MoonSurfaceRules {
     private static final RuleSource MOON_ROCK = block(GCBlocks.MOON_ROCK);
     private static final RuleSource MOON_TURF = block(GCBlocks.MOON_TURF);
     private static final RuleSource MOON_BASALT = block(GCBlocks.MOON_BASALT);
-    private static final RuleSource DEBUG_STATE = block(GCBlocks.ALUMINUM_DECORATION);
+    private static final RuleSource DEBUG_STATE = block(GCBlocks.ALUMINUM_DECORATION.block());
 
     private static final RuleSource SECONDARY_MATERIAL = SurfaceRules.sequence(
             SurfaceRules.ifTrue(IS_MARE, MOON_BASALT),
@@ -112,6 +111,6 @@ public class MoonSurfaceRules {
     }
 
     public static void register() {
-        Registry.register(BuiltInRegistries.MATERIAL_RULE, new ResourceLocation(Constant.MOD_ID, "moon"), Codec.unit(MOON));
+        Registry.register(BuiltInRegistries.MATERIAL_RULE, Constant.id("moon"), Codec.unit(MOON));
     }
 }

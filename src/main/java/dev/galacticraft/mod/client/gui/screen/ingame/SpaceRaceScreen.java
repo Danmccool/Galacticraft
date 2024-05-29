@@ -26,6 +26,7 @@ import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import dev.galacticraft.mod.Constant;
+import dev.galacticraft.mod.util.Translations;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.Minecraft;
@@ -35,9 +36,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 
 import java.io.File;
@@ -46,9 +45,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class SpaceRaceScreen extends Screen {
     private int backgroundWidth = 0;
     private int backgroundHeight = 0;
@@ -56,7 +52,7 @@ public class SpaceRaceScreen extends Screen {
     private EditBox teamNameInput;
 
     public SpaceRaceScreen() {
-        super(Component.translatable("ui." + Constant.MOD_ID + ".space_race_manager"));
+        super(Component.translatable(Translations.SpaceRace.SPACE_RACE_MANAGER));
     }
 
     @Override
@@ -80,7 +76,7 @@ public class SpaceRaceScreen extends Screen {
                     if (focused) {
                         this.prevText = this.getValue();
                     } else if (this.prevText == null || !this.prevText.equals(this.getValue())) {
-                        ClientPlayNetworking.send(new ResourceLocation(Constant.MOD_ID, "team_name"), PacketByteBufs.create().writeUtf(this.getValue()));
+                        ClientPlayNetworking.send(Constant.id("team_name"), PacketByteBufs.create().writeUtf(this.getValue()));
                     }
                 }
                 super.setFocused(focused);
@@ -124,7 +120,7 @@ public class SpaceRaceScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics) {
+    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
         // 5% of width
         int maxWidth = (int) (this.width - (getXMargins() * 1.5D));
         if (backgroundWidth < maxWidth) {
@@ -140,66 +136,65 @@ public class SpaceRaceScreen extends Screen {
     }
 
     private void renderForeground(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawCenteredString(this.font, I18n.get("ui.galacticraft.space_race_manager"), this.width / 2, getTop() - 20, 0xFFFFFF);
+        graphics.drawCenteredString(this.font, Component.translatable(Translations.SpaceRace.SPACE_RACE_MANAGER), this.width / 2, getTop() - 20, 0xFFFFFF);
 
         if (menu == Menu.MAIN) {
             if (!check(mouseX, mouseY, this.getLeft() + 5, this.getTop() + 5, 40, 14)) {
-                renderButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.exit"), this.getLeft() + 5, this.getTop() + 5, 40, 14);
+                renderButton(graphics, font, Component.translatable(Translations.SpaceRace.EXIT), this.getLeft() + 5, this.getTop() + 5, 40, 14);
             } else {
-                renderHoveredButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.exit"), this.getLeft() + 5, this.getTop() + 5, 40, 14);
+                renderHoveredButton(graphics, font, Component.translatable(Translations.SpaceRace.EXIT), this.getLeft() + 5, this.getTop() + 5, 40, 14);
             }
 
             if (!check(mouseX, mouseY, this.getLeft() + 10, this.getBottom() - 85, 100, 30)) {
-                renderButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.add_players"), this.getLeft() + 10, this.getBottom() - 85, 100, 30);
+                renderButton(graphics, font, Component.translatable(Translations.SpaceRace.ADD_PLAYERS), this.getLeft() + 10, this.getBottom() - 85, 100, 30);
             } else {
-                renderHoveredButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.add_players"), this.getLeft() + 10, this.getBottom() - 85, 100, 30);
+                renderHoveredButton(graphics, font, Component.translatable(Translations.SpaceRace.ADD_PLAYERS), this.getLeft() + 10, this.getBottom() - 85, 100, 30);
             }
 
             if (!check(mouseX, mouseY, this.getLeft() + 10, this.getBottom() - 45, 100, 30)) {
-                renderButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.remove_players"), this.getLeft() + 10, this.getBottom() - 45, 100, 30);
+                renderButton(graphics, font, Component.translatable(Translations.SpaceRace.REMOVE_PLAYERS), this.getLeft() + 10, this.getBottom() - 45, 100, 30);
             } else {
-                renderHoveredButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.remove_players"), this.getLeft() + 10, this.getBottom() - 45, 100, 30);
+                renderHoveredButton(graphics, font, Component.translatable(Translations.SpaceRace.REMOVE_PLAYERS), this.getLeft() + 10, this.getBottom() - 45, 100, 30);
             }
 
             if (!check(mouseX, mouseY, this.getRight() - 100 - 10, this.getBottom() - 85, 100, 30)) {
-                renderButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.server_stats"), this.getRight() - 100 - 10, this.getBottom() - 85, 100, 30);
+                renderButton(graphics, font, Component.translatable(Translations.SpaceRace.SERVER_STATS), this.getRight() - 100 - 10, this.getBottom() - 85, 100, 30);
             } else {
-                renderHoveredButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.coming_soon"), this.getRight() - 100 - 10, this.getBottom() - 85, 100, 30);
+                renderHoveredButton(graphics, font, Component.translatable(Translations.SpaceRace.COMING_SOON), this.getRight() - 100 - 10, this.getBottom() - 85, 100, 30);
             }
 
             if (!check(mouseX, mouseY, this.getRight() - 100 - 10, this.getBottom() - 45, 100, 30)) {
-                renderButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.global_stats"), this.getRight() - 100 - 10, this.getBottom() - 45, 100, 30);
+                renderButton(graphics, font, Component.translatable(Translations.SpaceRace.GLOBAL_STATS), this.getRight() - 100 - 10, this.getBottom() - 45, 100, 30);
             } else {
-                renderHoveredButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.coming_soon"), this.getRight() - 100 - 10, this.getBottom() - 45, 100, 30);
+                renderHoveredButton(graphics, font, Component.translatable(Translations.SpaceRace.COMING_SOON), this.getRight() - 100 - 10, this.getBottom() - 45, 100, 30);
             }
         } else if (menu == Menu.ADD_PLAYERS) {
             if (!check(mouseX, mouseY, this.getLeft() + 5, this.getTop() + 5, 40, 14)) {
-                renderButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.back"), this.getLeft() + 5, this.getTop() + 5, 40, 14);
+                renderButton(graphics, font, Component.translatable(Translations.SpaceRace.BACK), this.getLeft() + 5, this.getTop() + 5, 40, 14);
             } else {
-                renderHoveredButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.back"), this.getLeft() + 5, this.getTop() + 5, 40, 14);
+                renderHoveredButton(graphics, font, Component.translatable(Translations.SpaceRace.BACK), this.getLeft() + 5, this.getTop() + 5, 40, 14);
             }
 
         } else if (menu == Menu.REMOVE_PLAYERS) {
             if (!check(mouseX, mouseY, this.getLeft() + 5, this.getTop() + 5, 40, 14)) {
-                renderButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.back"), this.getLeft() + 5, this.getTop() + 5, 40, 14);
+                renderButton(graphics, font, Component.translatable(Translations.SpaceRace.BACK), this.getLeft() + 5, this.getTop() + 5, 40, 14);
             } else {
-                renderHoveredButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.back"), this.getLeft() + 5, this.getTop() + 5, 40, 14);
+                renderHoveredButton(graphics, font, Component.translatable(Translations.SpaceRace.BACK), this.getLeft() + 5, this.getTop() + 5, 40, 14);
             }
 
         } else if (menu == Menu.TEAM_COLOR) {
             if (!check(mouseX, mouseY, this.getLeft() + 5, this.getTop() + 5, 40, 14)) {
-                renderButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.back"), this.getLeft() + 5, this.getTop() + 5, 40, 14);
+                renderButton(graphics, font, Component.translatable(Translations.SpaceRace.BACK), this.getLeft() + 5, this.getTop() + 5, 40, 14);
             } else {
-                renderHoveredButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.back"), this.getLeft() + 5, this.getTop() + 5, 40, 14);
+                renderHoveredButton(graphics, font, Component.translatable(Translations.SpaceRace.BACK), this.getLeft() + 5, this.getTop() + 5, 40, 14);
             }
 
         } else if (menu == Menu.TEAM_FLAG) {
             if (!check(mouseX, mouseY, this.getLeft() + 5, this.getTop() + 5, 40, 14)) {
-                renderButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.back"), this.getLeft() + 5, this.getTop() + 5, 40, 14);
+                renderButton(graphics, font, Component.translatable(Translations.SpaceRace.BACK), this.getLeft() + 5, this.getTop() + 5, 40, 14);
             } else {
-                renderHoveredButton(graphics, font, Component.translatable("ui.galacticraft.space_race_manager.back"), this.getLeft() + 5, this.getTop() + 5, 40, 14);
+                renderHoveredButton(graphics, font, Component.translatable(Translations.SpaceRace.BACK), this.getLeft() + 5, this.getTop() + 5, 40, 14);
             }
-
         }
     }
 
@@ -255,8 +250,6 @@ public class SpaceRaceScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int x, int y, float delta) {
-        this.renderBackground(graphics);
-
         if (this.isAnimationComplete()) {
             this.renderForeground(graphics, x, y);
             this.drawMouseoverTooltip(graphics, x, y);
@@ -393,12 +386,12 @@ public class SpaceRaceScreen extends Screen {
                                     array[y * 48 + x] = (finalImage.getPixelRGBA(x, y) /*& 0x00FFFFFF will be done on server (don't trust clients, so why do extra work?)*/); //ignore alpha channel
                                 }
                             }
-                            ClientPlayNetworking.send(new ResourceLocation(Constant.MOD_ID, "flag_data"), PacketByteBufs.create().writeVarIntArray(array));
+                            ClientPlayNetworking.send(Constant.id("flag_data"), PacketByteBufs.create().writeVarIntArray(array));
                         } else {
                             finalImage.close();
                         }
                         this.minecraft.setScreen(SpaceRaceScreen.this);
-                    }, Component.translatable("ui.galacticraft.space_race_manager.flag.confirm"), Component.translatable("ui.galacticraft.space_race_manager.flag.confirm.message")));
+                    }, Component.translatable(Translations.SpaceRace.FLAG_CONFIRM), Component.translatable(Translations.SpaceRace.FLAG_CONFIRM_MESSAGE)));
                 }
             }
         }

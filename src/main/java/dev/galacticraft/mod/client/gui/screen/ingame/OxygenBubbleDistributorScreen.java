@@ -26,23 +26,21 @@ import dev.galacticraft.machinelib.api.machine.MachineStatus;
 import dev.galacticraft.machinelib.client.api.screen.MachineScreen;
 import dev.galacticraft.mod.Constant;
 import dev.galacticraft.mod.content.block.entity.machine.OxygenBubbleDistributorBlockEntity;
+import dev.galacticraft.mod.network.packets.BubbleMaxPacket;
+import dev.galacticraft.mod.network.packets.ToggleBubbleVisibilityPacket;
 import dev.galacticraft.mod.screen.OxygenBubbleDistributorMenu;
 import dev.galacticraft.mod.util.DrawableUtil;
-import io.netty.buffer.Unpooled;
+import dev.galacticraft.mod.util.Translations;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.text.DecimalFormat;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class OxygenBubbleDistributorScreen extends MachineScreen<OxygenBubbleDistributorBlockEntity, OxygenBubbleDistributorMenu> {
     private static final DecimalFormat FORMAT = new DecimalFormat();
     private final EditBox textField;
@@ -77,21 +75,21 @@ public class OxygenBubbleDistributorScreen extends MachineScreen<OxygenBubbleDis
 
     @SuppressWarnings("DataFlowIssue")
     @Override
-    protected void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+    protected void renderMachineBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
         if (!this.menu.bubbleVisible) {
             if (!DrawableUtil.isWithin(mouseX, mouseY, this.leftPos + 156, this.topPos + 16, 13, 13)) {
                 graphics.blit(Constant.ScreenTexture.OVERLAY, this.leftPos + 156, this.topPos + 16, Constant.TextureCoordinate.BUTTON_RED_X, Constant.TextureCoordinate.BUTTON_RED_Y, Constant.TextureCoordinate.BUTTON_WIDTH, Constant.TextureCoordinate.BUTTON_HEIGHT);
             } else {
                 graphics.blit(Constant.ScreenTexture.OVERLAY, this.leftPos + 156, this.topPos + 16, Constant.TextureCoordinate.BUTTON_RED_HOVER_X, Constant.TextureCoordinate.BUTTON_RED_HOVER_Y, Constant.TextureCoordinate.BUTTON_WIDTH, Constant.TextureCoordinate.BUTTON_HEIGHT);
             }
-            graphics.drawString(this.font, Component.translatable("ui.galacticraft.bubble_distributor.not_visible"), this.leftPos + 60 , this.topPos + 18, ChatFormatting.RED.getColor(), false);
+            graphics.drawString(this.font, Component.translatable(Translations.Ui.BUBBLE_NOT_VISIBLE), this.leftPos + 60 , this.topPos + 18, ChatFormatting.RED.getColor(), false);
         } else {
             if (!DrawableUtil.isWithin(mouseX, mouseY, this.leftPos + 156, this.topPos + 16, 13, 13)) {
                 graphics.blit(Constant.ScreenTexture.OVERLAY, this.leftPos + 156, this.topPos + 16, Constant.TextureCoordinate.BUTTON_GREEN_X, Constant.TextureCoordinate.BUTTON_GREEN_Y, Constant.TextureCoordinate.BUTTON_WIDTH, Constant.TextureCoordinate.BUTTON_HEIGHT);
             } else {
                 graphics.blit(Constant.ScreenTexture.OVERLAY, this.leftPos + 156, this.topPos + 16, Constant.TextureCoordinate.BUTTON_GREEN_HOVER_X, Constant.TextureCoordinate.BUTTON_GREEN_HOVER_Y, Constant.TextureCoordinate.BUTTON_WIDTH, Constant.TextureCoordinate.BUTTON_HEIGHT);
             }
-            graphics.drawString(this.font, Component.translatable("ui.galacticraft.bubble_distributor.visible"), this.leftPos + 60, this.topPos + 18, ChatFormatting.GREEN.getColor(), false);
+            graphics.drawString(this.font, Component.translatable(Translations.Ui.BUBBLE_VISIBLE), this.leftPos + 60, this.topPos + 18, ChatFormatting.GREEN.getColor(), false);
         }
         if (DrawableUtil.isWithin(mouseX, mouseY, this.leftPos + 158, this.topPos + 59, Constant.TextureCoordinate.ARROW_VERTICAL_WIDTH, Constant.TextureCoordinate.ARROW_VERTICAL_HEIGHT)) {
             graphics.blit(Constant.ScreenTexture.OVERLAY, this.leftPos + 158, this.topPos + 59, Constant.TextureCoordinate.ARROW_UP_HOVER_X, Constant.TextureCoordinate.ARROW_UP_HOVER_Y, Constant.TextureCoordinate.ARROW_VERTICAL_WIDTH, Constant.TextureCoordinate.ARROW_VERTICAL_HEIGHT);
@@ -100,7 +98,7 @@ public class OxygenBubbleDistributorScreen extends MachineScreen<OxygenBubbleDis
             graphics.blit(Constant.ScreenTexture.OVERLAY, this.leftPos + 158, this.topPos + 69, Constant.TextureCoordinate.ARROW_DOWN_HOVER_X, Constant.TextureCoordinate.ARROW_DOWN_HOVER_Y, Constant.TextureCoordinate.ARROW_VERTICAL_WIDTH, Constant.TextureCoordinate.ARROW_VERTICAL_HEIGHT);
         }
 
-        graphics.drawString(this.font, Component.translatable("ui.galacticraft.bubble_distributor.size"), this.leftPos + 70, this.topPos + 64, ChatFormatting.DARK_GRAY.getColor(), false);
+        graphics.drawString(this.font, Component.translatable(Translations.Ui.BUBBLE_TARGET_SIZE), this.leftPos + 70, this.topPos + 64, ChatFormatting.DARK_GRAY.getColor(), false);
     }
 
     @Override
@@ -109,7 +107,7 @@ public class OxygenBubbleDistributorScreen extends MachineScreen<OxygenBubbleDis
         textField.setValue(String.valueOf(this.menu.targetSize));
 
         MachineStatus status = this.menu.state.getStatus();
-        graphics.drawString(this.font, Component.translatable("ui.galacticraft.machine.status").append(status != null ? status.getText() : Component.empty()), this.leftPos + 60, this.topPos + 30, ChatFormatting.DARK_GRAY.getColor(), false);
+        graphics.drawString(this.font, Component.translatable(Translations.Ui.MACHINE_STATUS).append(status != null ? status.getText() : Component.empty()), this.leftPos + 60, this.topPos + 30, ChatFormatting.DARK_GRAY.getColor(), false);
 
         this.textField.render(graphics, mouseX, mouseY, delta);
 
@@ -117,7 +115,7 @@ public class OxygenBubbleDistributorScreen extends MachineScreen<OxygenBubbleDis
         this.textField.setY(this.topPos + 59);
 
         if (this.menu.state.isActive()) {
-            graphics.drawString(this.font, Component.translatable("ui.galacticraft.bubble_distributor.current_size", FORMAT.format(this.menu.size)).setStyle(Constant.Text.Color.DARK_GRAY_STYLE), this.leftPos + 60, this.topPos + 42, ChatFormatting.DARK_GRAY.getColor(), false);
+            graphics.drawString(this.font, Component.translatable(Translations.Ui.BUBBLE_CURRENT_SIZE, FORMAT.format(this.menu.size)).setStyle(Constant.Text.Color.DARK_GRAY_STYLE), this.leftPos + 60, this.topPos + 42, ChatFormatting.DARK_GRAY.getColor(), false);
         }
     }
 
@@ -140,7 +138,7 @@ public class OxygenBubbleDistributorScreen extends MachineScreen<OxygenBubbleDis
         if (button == 0) {
             if (DrawableUtil.isWithin(mouseX, mouseY, this.leftPos + 156, this.topPos + 16, Constant.TextureCoordinate.BUTTON_WIDTH, Constant.TextureCoordinate.BUTTON_HEIGHT)) {
                 this.menu.bubbleVisible = ! this.menu.bubbleVisible;
-                ClientPlayNetworking.send(Constant.Packet.BUBBLE_VISIBLE, new FriendlyByteBuf(Unpooled.buffer().writeBoolean(this.menu.bubbleVisible)));
+                ClientPlayNetworking.send(new ToggleBubbleVisibilityPacket(this.menu.bubbleVisible));
                 return true;
             }
 
@@ -148,7 +146,7 @@ public class OxygenBubbleDistributorScreen extends MachineScreen<OxygenBubbleDis
                 if (this.menu.targetSize != Byte.MAX_VALUE) {
                     this.menu.targetSize = ((byte) (this.menu.targetSize + 1));
                     textField.setValue(String.valueOf(this.menu.targetSize));
-                    ClientPlayNetworking.send(Constant.Packet.BUBBLE_MAX, new FriendlyByteBuf(Unpooled.buffer().writeByte(this.menu.targetSize)));
+                    ClientPlayNetworking.send(new BubbleMaxPacket(this.menu.targetSize));
                     return true;
                 }
             }
@@ -157,7 +155,7 @@ public class OxygenBubbleDistributorScreen extends MachineScreen<OxygenBubbleDis
                 if (this.menu.targetSize > 1) {
                     this.menu.targetSize = (byte) (this.menu.targetSize - 1);
                     textField.setValue(String.valueOf(this.menu.targetSize));
-                    ClientPlayNetworking.send(Constant.Packet.BUBBLE_MAX, new FriendlyByteBuf(Unpooled.buffer().writeByte(this.menu.targetSize)));
+                    ClientPlayNetworking.send(new BubbleMaxPacket(this.menu.targetSize));
                     return true;
                 }
             }

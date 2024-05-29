@@ -33,9 +33,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.BlastingRecipe;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class ElectricArcFurnaceScreen extends MachineScreen<ElectricArcFurnaceBlockEntity, RecipeMachineMenu<Container, BlastingRecipe, ElectricArcFurnaceBlockEntity>> {
     private static final int ARROW_X = 68;
     private static final int ARROW_Y = 35;
@@ -49,8 +46,8 @@ public class ElectricArcFurnaceScreen extends MachineScreen<ElectricArcFurnaceBl
     }
 
     @Override
-    protected void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-        super.renderBackground(graphics, mouseX, mouseY, delta);
+    protected void renderMachineBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        super.renderMachineBackground(graphics, mouseX, mouseY, delta);
         if (this.menu.getMaxProgress() != 0 && this.menu.getProgress() != 0) {
             double scale = ((double)this.menu.getProgress()) / ((double)this.menu.getMaxProgress());
 

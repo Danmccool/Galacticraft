@@ -23,7 +23,7 @@
 package dev.galacticraft.mod.content.item;
 
 import dev.galacticraft.mod.Constant;
-import java.util.List;
+import dev.galacticraft.mod.util.Translations;
 import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -43,9 +43,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
+import java.util.List;
+
 public class StandardWrenchItem extends Item {
     public StandardWrenchItem(Properties settings) {
         super(settings);
@@ -73,20 +72,23 @@ public class StandardWrenchItem extends Item {
 
     private void use(Player player, BlockState state, LevelAccessor world, BlockPos pos, ItemStack stack) {
         Block block = state.getBlock();
-        Property<?> property = block.getStateDefinition().getProperty("facing");
-        if (property instanceof EnumProperty && property.getPossibleValues().contains(Direction.NORTH)) {
+        if (block.getStateDefinition().getProperty("facing") instanceof EnumProperty property && property.getPossibleValues().contains(Direction.NORTH)) {
             BlockState newState = cycle(state, property, player.isShiftKeyDown());
             world.setBlock(pos, newState, 18);
             stack.hurtAndBreak(2, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-        }
+        }/* else if (block.getStateDefinition().getProperty("axis") instanceof EnumProperty property && property.getPossibleValues().contains(Direction.Axis.X)) {
+            BlockState newState = cycle(state, property, player.isShiftKeyDown());
+            world.setBlock(pos, newState, 18);
+            stack.hurtAndBreak(2, player, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+        }*/
     }
 
     @Override
     public void appendHoverText(ItemStack stack, Level world, List<Component> lines, TooltipFlag context) {
         if (Screen.hasShiftDown()) {
-            lines.add(Component.translatable("tooltip.galacticraft.standard_wrench").setStyle(Constant.Text.Color.GRAY_STYLE));
+            lines.add(Component.translatable(Translations.Tooltip.STANDARD_WRENCH).setStyle(Constant.Text.Color.GRAY_STYLE));
         } else {
-            lines.add(Component.translatable("tooltip.galacticraft.press_shift").setStyle(Constant.Text.Color.GRAY_STYLE));
+            lines.add(Component.translatable(Translations.Tooltip.PRESS_SHIFT).setStyle(Constant.Text.Color.GRAY_STYLE));
         }
     }
 }

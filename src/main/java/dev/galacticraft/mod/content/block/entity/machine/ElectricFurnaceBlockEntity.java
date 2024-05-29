@@ -23,6 +23,7 @@
 package dev.galacticraft.mod.content.block.entity.machine;
 
 import dev.galacticraft.machinelib.api.block.entity.BasicRecipeMachineBlockEntity;
+import dev.galacticraft.machinelib.api.compat.vanilla.RecipeTestContainer;
 import dev.galacticraft.machinelib.api.machine.MachineStatus;
 import dev.galacticraft.machinelib.api.machine.MachineStatuses;
 import dev.galacticraft.machinelib.api.menu.RecipeMachineMenu;
@@ -36,15 +37,13 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class ElectricFurnaceBlockEntity extends BasicRecipeMachineBlockEntity<Container, SmeltingRecipe> {
     public static final int CHARGE_SLOT = 0;
     public static final int INPUT_SLOT = 1;
@@ -61,23 +60,23 @@ public class ElectricFurnaceBlockEntity extends BasicRecipeMachineBlockEntity<Co
     }
 
     @Override
-    protected @NotNull MachineStatus workingStatus(SmeltingRecipe recipe) {
+    protected @NotNull MachineStatus workingStatus(RecipeHolder<SmeltingRecipe> recipe) {
         return MachineStatuses.ACTIVE;
     }
 
     @Override
     protected @Nullable MachineStatus hasResourcesToWork() {
-        return this.energyStorage().canExtract(Galacticraft.CONFIG_MANAGER.get().electricCompressorEnergyConsumptionRate()) ? null : MachineStatuses.NOT_ENOUGH_ENERGY;
+        return this.energyStorage().canExtract(Galacticraft.CONFIG.electricCompressorEnergyConsumptionRate()) ? null : MachineStatuses.NOT_ENOUGH_ENERGY;
     }
 
     @Override
     protected void extractResourcesToWork() {
-        this.energyStorage().extract(Galacticraft.CONFIG_MANAGER.get().electricCompressorEnergyConsumptionRate());
+        this.energyStorage().extract(Galacticraft.CONFIG.electricCompressorEnergyConsumptionRate());
     }
 
     @Override
-    public int getProcessingTime(@NotNull SmeltingRecipe recipe) {
-        return recipe.getCookingTime();
+    public int getProcessingTime(@NotNull RecipeHolder<SmeltingRecipe> recipe) {
+        return recipe.value().getCookingTime();
     }
 
     @Nullable
@@ -91,5 +90,10 @@ public class ElectricFurnaceBlockEntity extends BasicRecipeMachineBlockEntity<Co
             );
         }
         return null;
+    }
+
+    @Override
+    protected Container createCraftingInv() {
+        return RecipeTestContainer.create(this.itemStorage(), this.inputSlots, this.inputSlotsLen);
     }
 }

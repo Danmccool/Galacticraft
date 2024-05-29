@@ -168,12 +168,6 @@ public class Slimeling extends TamableAnimal implements ContainerListener, HasCu
         //        this.updateContainerEquipment();
     }
 
-    @Override
-    public boolean canBreatheUnderwater()
-    {
-        return true;
-    }
-
     public float getSlimelingSize()
     {
         return this.getScale() * 2.0F;

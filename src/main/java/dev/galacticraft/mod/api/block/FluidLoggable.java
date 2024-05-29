@@ -29,6 +29,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -40,14 +41,12 @@ import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public interface FluidLoggable extends BucketPickup, LiquidBlockContainer {
     FluidState EMPTY_STATE = Fluids.EMPTY.defaultFluidState();
     ResourceLocation INVALID = new ResourceLocation("invalid");
@@ -88,7 +87,7 @@ public interface FluidLoggable extends BucketPickup, LiquidBlockContainer {
     };
 
     @Override
-    default boolean canPlaceLiquid(BlockGetter view, BlockPos pos, BlockState state, Fluid fluid) {
+    default boolean canPlaceLiquid(@Nullable Player player, BlockGetter view, BlockPos pos, BlockState state, Fluid fluid) {
         return fluid instanceof FlowingFluid;
     }
 
@@ -125,7 +124,7 @@ public interface FluidLoggable extends BucketPickup, LiquidBlockContainer {
     }
 
     @Override
-    default ItemStack pickupBlock(LevelAccessor world, BlockPos pos, BlockState state) {
+    default ItemStack pickupBlock(@Nullable Player player, LevelAccessor world, BlockPos pos, BlockState state) {
         if (!this.isEmpty(state)) {
             if (BuiltInRegistries.FLUID.get(state.getValue(FLUID)).defaultFluidState().isSource()) {
                 world.setBlock(pos, state.setValue(FLUID, Constant.Misc.EMPTY).setValue(FlowingFluid.LEVEL, 1), 3);

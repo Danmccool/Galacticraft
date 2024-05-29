@@ -29,6 +29,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
@@ -40,9 +41,6 @@ import net.minecraft.world.level.Level;
 
 import java.util.UUID;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class EvolvedCreeperEntity extends Creeper {
     private static final EntityDataAccessor<Boolean> BABY = SynchedEntityData.defineId(EvolvedCreeperEntity.class, EntityDataSerializers.BOOLEAN);
     private static final UUID BABY_SPEED_ID = UUID.fromString("B9766B59-9566-4402-BC1F-2EE2A276D836");
@@ -92,7 +90,7 @@ public class EvolvedCreeperEntity extends Creeper {
         this.getEntityData().set(BABY, baby);
         if (this.level() != null && !this.level().isClientSide) {
             AttributeInstance entityAttributeInstance = this.getAttribute(Attributes.MOVEMENT_SPEED);
-            entityAttributeInstance.removeModifier(BABY_SPEED_BONUS);
+            entityAttributeInstance.removeModifier(BABY_SPEED_ID);
             if (baby) {
                 entityAttributeInstance.addTransientModifier(BABY_SPEED_BONUS);
             }
@@ -122,7 +120,7 @@ public class EvolvedCreeperEntity extends Creeper {
     }
 
     @Override
-    public double getMyRidingOffset() {
-        return this.isBaby() ? 0.0D : -0.45D;
+    public float getMyRidingOffset(Entity entity) {
+        return this.isBaby() ? 0.0F : -0.45F;
     }
 }

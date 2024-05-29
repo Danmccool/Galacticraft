@@ -2,20 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "X": {
-      "item": "minecraft:milk_bucket"
-    },
-    "Y": {
+    "C": {
       "item": "galacticraft:cheese_curd"
+    },
+    "M": {
+      "item": "minecraft:milk_bucket"
     }
   },
   "pattern": [
-    "YYY",
-    "YXY",
-    "YYY"
+    "CCC",
+    "CMC",
+    "CCC"
   ],
   "result": {
     "item": "galacticraft:moon_cheese_block"
-  },
-  "show_notification": true
+  }
 }

@@ -22,7 +22,9 @@
 
 package dev.galacticraft.mod.content.block.environment;
 
+import com.mojang.serialization.MapCodec;
 import dev.galacticraft.mod.Constant;
+import dev.galacticraft.mod.util.Translations;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -36,12 +38,10 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-/**
- * @author <a href="https://github.com/TeamGalacticraft">TeamGalacticraft</a>
- */
 public class GlowstoneWallTorchBlock extends WallTorchBlock {
+    public static final MapCodec<GlowstoneWallTorchBlock> CODEC = simpleCodec(GlowstoneWallTorchBlock::new);
     public GlowstoneWallTorchBlock(Properties settings) {
-        super(settings, null);
+        super(null, settings);
     }
 
     @Override
@@ -51,9 +51,9 @@ public class GlowstoneWallTorchBlock extends WallTorchBlock {
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter blockView, List<Component> list, TooltipFlag tooltipContext) {
         if (Screen.hasShiftDown()) {
-            list.add(Component.translatable("tooltip.galacticraft.glowstone_torch").setStyle(Constant.Text.Color.GRAY_STYLE));
+            list.add(Component.translatable(Translations.Tooltip.GLOWSTONE_TORCH).setStyle(Constant.Text.Color.GRAY_STYLE));
         } else {
-            list.add(Component.translatable("tooltip.galacticraft.press_shift").setStyle(Constant.Text.Color.GRAY_STYLE));
+            list.add(Component.translatable(Translations.Tooltip.PRESS_SHIFT).setStyle(Constant.Text.Color.GRAY_STYLE));
         }
     }
 }
